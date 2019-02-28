@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using WebSecurityAssignment.Data;
+
+namespace WebSecurityAssignment.Repositories
+{
+    public class RatingsRepo
+    {
+        ApplicationDbContext _context;
+
+        public RatingsRepo(ApplicationDbContext context)
+        {
+            this._context = context;
+        }
+
+        public List<Rating> GetAllRatings()
+        {
+            var ratings = _context.Ratings;
+            List<Rating> ratingList = new List<Rating>();
+
+            foreach (var item in ratings)
+            {
+                ratingList.Add(new Rating() { employeeID = item.employeeID, jobID = item.jobID });
+            }
+            return ratingList;
+        }
+
+        public Rating GetRating(string employeeID, int jobID)
+        {
+            var rating = _context.Ratings.Where(r => r.employeeID == employeeID && r.jobID == jobID).FirstOrDefault();
+            if (rating != null)
+            {
+                return new Rating() { employeeID = rating.employeeID, jobID = rating.jobID };
+            }
+            return null;
+        }
+
+        public bool RemoveRating(string employeeID, int jobID)
+        {
+            var rating = _context.Ratings.Where(r => r.employeeID == employeeID && r.jobID == jobID).FirstOrDefault();
+
+            _context.Ratings.Remove(rating);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool UpdateRating(int jobID, string employeeID, string review, float score)
+        {
+            var rating = _context.Ratings.Where(r => r.employeeID == employeeID && r.jobID == jobID).FirstOrDefault();
+            // Remember you can't update the primary key without 
+            // causing trouble.  Just update the review and score
+            // for now.
+            rating.score = score;
+            rating.review = review;
+
+            _context.SaveChanges();
+            return true;
+        }
+    }
+}
