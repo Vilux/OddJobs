@@ -54,5 +54,36 @@ namespace WebSecurityAssignment.Repositories
             }
             return null;
         }
+
+        public bool DeleteJob(int jobID)
+        {
+            var job = _context.Jobs.Where(j => j.jobID == jobID).FirstOrDefault();
+
+            _context.Jobs.Remove(job);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool UpdateJob(int jobID, string title, 
+            string description, string employerID, string employeeID,
+            float amount, DateTime dateNeeded, DateTime dateExpired, int addressID)
+        {
+            var job = _context.Jobs.Where(j => j.jobID == jobID).FirstOrDefault();
+            // Remember you can't update the primary key without 
+            // causing trouble.  Just update the review and score
+            // for now.
+
+            job.title = title;
+            job.description = description;
+            job.employerID = employerID;
+            job.employeeID = employeeID;
+            job.amount = amount;
+            job.dateNeeded = dateNeeded;
+            job.dateExpired = dateExpired;
+            job.addressID = addressID;
+
+            _context.SaveChanges();
+            return true;
+        }
     }
 }
