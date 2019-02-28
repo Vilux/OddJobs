@@ -4,16 +4,26 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebSecurityAssignment.Data;
 using WebSecurityAssignment.Models;
 
 namespace WebSecurityAssignment.Controllers
 {
 	public class HomeController : Controller
 	{
-		public IActionResult Index()
+        private ApplicationDbContext db;
+
+        public HomeController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
+
+        public IActionResult Index()
 		{
-			return View();
-		}
+            var jobList = db.Jobs.ToList();
+
+            return View(jobList);
+        }
 
 		public IActionResult About()
 		{
