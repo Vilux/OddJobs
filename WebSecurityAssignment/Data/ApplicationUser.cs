@@ -8,9 +8,14 @@ namespace WebSecurityAssignment.Data
 {
 	public class ApplicationUser : IdentityUser
 	{
-		public string FirstName { get; set; }
-		public string LastName { get; set; }
-		public virtual ICollection<Invoice> Invoices { get; set; }
-	}
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string ContactInfo { get; set; }
+
+        public virtual ICollection<Application> Applications { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<Job> Jobs { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
+    }
 
 }
