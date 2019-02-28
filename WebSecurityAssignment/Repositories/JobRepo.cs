@@ -23,7 +23,8 @@ namespace WebSecurityAssignment.Repositories
 
             foreach (var item in jobs)
             {
-                jobList.Add(new Job() { title = item.title,
+                jobList.Add(new Job() { jobID = item.jobID,
+                    title = item.title,
                     description = item.description,
                     employeeID = item.employeeID,
                     employerID = item.employerID,
@@ -81,6 +82,15 @@ namespace WebSecurityAssignment.Repositories
             job.dateNeeded = dateNeeded;
             job.dateExpired = dateExpired;
             job.addressID = addressID;
+
+            _context.SaveChanges();
+            return true;
+        }
+
+        public bool CreateJob(Job job)
+        {
+            var jobs = _context.Jobs;
+            jobs.Add(job);
 
             _context.SaveChanges();
             return true;
