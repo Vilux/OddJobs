@@ -15,16 +15,24 @@ namespace WebSecurityAssignment.Repositories
             this._context = context;
         }
 
-        public List<RoleVM> GetAllRoles()
+        public List<Job> GetAllJobs()
         {
-            var roles = _context.Roles;
-            List<RoleVM> roleList = new List<RoleVM>();
+            var jobs = _context.Jobs;
+            List<Job> jobList = new List<Job>();
 
-            foreach (var item in roles)
+            foreach (var item in jobs)
             {
-                roleList.Add(new RoleVM() { RoleName = item.Name, Id = item.Id });
+                jobList.Add(new Job() { title = item.title,
+                    description = item.description,
+                    employeeID = item.employeeID,
+                    employerID = item.employerID,
+                    amount = item.amount,
+                    dateNeeded = item.dateNeeded,
+                    dateExpired = item.dateExpired,
+                    addressID = item.addressID
+                });
             }
-            return roleList;
+            return jobList;
         }
     }
 }
