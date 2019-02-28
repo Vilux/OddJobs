@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
+using WebSecurityAssignment.Repositories;
 
 namespace WebSecurityAssignment.Controllers
 {
@@ -19,30 +20,22 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Jobs
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Jobs.Include(j => j.Address).Include(j => j.ApplicationUser);
-            return View(await applicationDbContext.ToListAsync());
+            JobRepo jobRepo = new JobRepo(_context);
+            var jobs = jobRepo.GetAllJobs();
+
+            return View(jobs);
         }
 
         // GET: Jobs/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var job = await _context.Jobs
-                .Include(j => j.Address)
-                .Include(j => j.ApplicationUser)
-                .FirstOrDefaultAsync(m => m.jobID == id);
-            if (job == null)
-            {
-                return NotFound();
-            }
+            JobRepo jobRepo = new JobRepo(_context);
+            var job = jobRepo.GetJob(id);
 
             return View(job);
+
         }
 
         // GET: Jobs/Create
