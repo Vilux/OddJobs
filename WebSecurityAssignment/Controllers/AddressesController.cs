@@ -119,12 +119,20 @@ namespace WebSecurityAssignment.Controllers
         // POST: Addresses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(Address address)
         {
-            var address = await _context.Addresses.FindAsync(id);
-            _context.Addresses.Remove(address);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var addresses = _context.Addresses;
+            if (ModelState.IsValid)
+            {
+                AddressesRepo addressesRepo = new AddressesRepo(_context);
+                var success = addressesRepo.RemoveAddress(address.addressID);
+                if (success)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            ViewBag.Error = "An error occurred while deleting this address. Please try again.";
+            return View();
         }
 
         private bool AddressExists(int id)
