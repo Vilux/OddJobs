@@ -75,6 +75,7 @@ namespace WebSecurityAssignment.Data
         [Key, Column(Order = 1)]
         public int jobID { get; set; }
         public float score { get; set; }
+        public string review { get; set; }
 
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
