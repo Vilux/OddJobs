@@ -9,8 +9,8 @@ using WebSecurityAssignment.Data;
 namespace WebSecurityAssignment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190123201655_addCustomUserContent")]
-    partial class addCustomUserContent
+    [Migration("20190228174216_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,6 +125,39 @@ namespace WebSecurityAssignment.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("WebSecurityAssignment.Data.Address", b =>
+                {
+                    b.Property<int>("addressID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("city");
+
+                    b.Property<string>("postalCode");
+
+                    b.Property<string>("province");
+
+                    b.Property<string>("streetAddress");
+
+                    b.HasKey("addressID");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.Data.Application", b =>
+                {
+                    b.Property<string>("ApplicantID");
+
+                    b.Property<int>("JobID");
+
+                    b.Property<string>("Comment");
+
+                    b.HasKey("ApplicantID", "JobID");
+
+                    b.HasIndex("JobID");
+
+                    b.ToTable("Applications");
+                });
+
             modelBuilder.Entity("WebSecurityAssignment.Data.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -134,6 +167,8 @@ namespace WebSecurityAssignment.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("ContactInfo");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -179,22 +214,72 @@ namespace WebSecurityAssignment.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("WebSecurityAssignment.Data.Invoice", b =>
+            modelBuilder.Entity("WebSecurityAssignment.Data.Job", b =>
                 {
-                    b.Property<int>("InvoiceID")
+                    b.Property<int>("jobID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Created");
+                    b.Property<int>("addressID");
 
-                    b.Property<decimal>("Total");
+                    b.Property<float>("amount");
 
-                    b.Property<string>("UserID");
+                    b.Property<DateTime>("dateExpired");
 
-                    b.HasKey("InvoiceID");
+                    b.Property<DateTime>("dateNeeded");
 
-                    b.HasIndex("UserID");
+                    b.Property<string>("description");
 
-                    b.ToTable("Invoices");
+                    b.Property<string>("employeeID");
+
+                    b.Property<string>("employerID");
+
+                    b.Property<string>("title");
+
+                    b.HasKey("jobID");
+
+                    b.HasIndex("addressID");
+
+                    b.HasIndex("employerID");
+
+                    b.ToTable("Jobs");
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.Data.Rating", b =>
+                {
+                    b.Property<string>("employeeID");
+
+                    b.Property<int>("jobID");
+
+                    b.Property<float>("score");
+
+                    b.HasKey("employeeID", "jobID");
+
+                    b.ToTable("Ratings");
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.Data.Transaction", b =>
+                {
+                    b.Property<int>("transactionID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("date");
+
+                    b.Property<string>("employeeID");
+
+                    b.Property<int>("jobID");
+
+                    b.Property<float>("paymentToEmployee");
+
+                    b.Property<float>("paymentToProvider");
+
+                    b.HasKey("transactionID");
+
+                    b.HasIndex("employeeID");
+
+                    b.HasIndex("jobID")
+                        .IsUnique();
+
+                    b.ToTable("Transactions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -242,12 +327,51 @@ namespace WebSecurityAssignment.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("WebSecurityAssignment.Data.Invoice", b =>
+            modelBuilder.Entity("WebSecurityAssignment.Data.Application", b =>
                 {
                     b.HasOne("WebSecurityAssignment.Data.ApplicationUser", "ApplicationUser")
-                        .WithMany("Invoices")
-                        .HasForeignKey("UserID")
+                        .WithMany("Applications")
+                        .HasForeignKey("ApplicantID")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("WebSecurityAssignment.Data.Job", "Job")
+                        .WithMany("Applications")
+                        .HasForeignKey("JobID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.Data.Job", b =>
+                {
+                    b.HasOne("WebSecurityAssignment.Data.Address", "Address")
+                        .WithMany("Jobs")
+                        .HasForeignKey("addressID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("WebSecurityAssignment.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Jobs")
+                        .HasForeignKey("employerID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.Data.Rating", b =>
+                {
+                    b.HasOne("WebSecurityAssignment.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Ratings")
+                        .HasForeignKey("employeeID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.Data.Transaction", b =>
+                {
+                    b.HasOne("WebSecurityAssignment.Data.ApplicationUser", "ApplicationUser")
+                        .WithMany("Transactions")
+                        .HasForeignKey("employeeID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("WebSecurityAssignment.Data.Job", "Job")
+                        .WithOne("Transaction")
+                        .HasForeignKey("WebSecurityAssignment.Data.Transaction", "jobID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
