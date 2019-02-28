@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
+using WebSecurityAssignment.Repositories;
 
 namespace WebSecurityAssignment.Controllers
 {
@@ -19,29 +20,17 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Transactions
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Transactions.Include(t => t.ApplicationUser).Include(t => t.Job);
-            return View(await applicationDbContext.ToListAsync());
+            TransactionRepo transactionRepo = new TransactionRepo(_context);
+            return View(transactionRepo.GetAllTransactions());
         }
 
         // GET: Transactions/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int transactionID)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var transaction = await _context.Transactions
-                .Include(t => t.ApplicationUser)
-                .Include(t => t.Job)
-                .FirstOrDefaultAsync(m => m.transactionID == id);
-            if (transaction == null)
-            {
-                return NotFound();
-            }
-
+            TransactionRepo transactionRepo = new TransactionRepo(_context);
+            Transaction transaction = transactionRepo.GetTransaction(transactionID);
             return View(transaction);
         }
 
@@ -53,108 +42,26 @@ namespace WebSecurityAssignment.Controllers
             return View();
         }
 
-        // POST: Transactions/Create
+        // POST: Transaction/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("transactionID,employeeID,jobID,paymentToEmployee,paymentToProvider,date")] Transaction transaction)
+        public ActionResult Create(Transaction transaction)
         {
+            var transactions = _context.Transactions;
             if (ModelState.IsValid)
             {
-                _context.Add(transaction);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["employeeID"] = new SelectList(_context.Users, "Id", "Id", transaction.employeeID);
-            ViewData["jobID"] = new SelectList(_context.Jobs, "jobID", "jobID", transaction.jobID);
-            return View(transaction);
-        }
-
-        // GET: Transactions/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var transaction = await _context.Transactions.FindAsync(id);
-            if (transaction == null)
-            {
-                return NotFound();
-            }
-            ViewData["employeeID"] = new SelectList(_context.Users, "Id", "Id", transaction.employeeID);
-            ViewData["jobID"] = new SelectList(_context.Jobs, "jobID", "jobID", transaction.jobID);
-            return View(transaction);
-        }
-
-        // POST: Transactions/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("transactionID,employeeID,jobID,paymentToEmployee,paymentToProvider,date")] Transaction transaction)
-        {
-            if (id != transaction.transactionID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                TransactionRepo transactionRepo = new TransactionRepo(_context);
+                var success = transactionRepo.CreateTransaction(transaction.transactionID, transaction.employeeID, transaction.jobID, transaction.paymentToEmployee, transaction.paymentToProvider, 
+                    transaction.date);
+                if (success)
                 {
-                    _context.Update(transaction);
-                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TransactionExists(transaction.transactionID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["employeeID"] = new SelectList(_context.Users, "Id", "Id", transaction.employeeID);
-            ViewData["jobID"] = new SelectList(_context.Jobs, "jobID", "jobID", transaction.jobID);
-            return View(transaction);
-        }
-
-        // GET: Transactions/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var transaction = await _context.Transactions
-                .Include(t => t.ApplicationUser)
-                .Include(t => t.Job)
-                .FirstOrDefaultAsync(m => m.transactionID == id);
-            if (transaction == null)
-            {
-                return NotFound();
-            }
-
-            return View(transaction);
-        }
-
-        // POST: Transactions/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var transaction = await _context.Transactions.FindAsync(id);
-            _context.Transactions.Remove(transaction);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            ViewBag.Error = "An error occurred while creating this role. Please try again.";
+            return View();
         }
 
         private bool TransactionExists(int id)

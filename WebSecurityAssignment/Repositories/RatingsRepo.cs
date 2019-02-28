@@ -67,5 +67,23 @@ namespace WebSecurityAssignment.Repositories
             _context.SaveChanges();
             return true;
         }
+
+        public bool CreateRating(int jobID, string employeeID, string review, float score)
+        {
+            var rating = GetRating(employeeID, jobID);
+            if (rating != null)
+            {
+                return false;
+            }
+            _context.Ratings.Add(new Ratings
+            {
+                jobID = jobID,
+                employeeID = employeeID,
+                review = review,
+                score = score
+            });
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

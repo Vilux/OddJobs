@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,6 +43,26 @@ namespace WebSecurityAssignment.Repositories
                 return new Transaction() { transactionID = transaction.transactionID };
             }
             return null;
+        }
+
+        public bool CreateTransaction(int transactionID, string employeeID, int jobID, float paymentToEmployee, float paymentToProvider, DateTime date)
+        {
+            var transaction = GetTransaction(transactionID);
+            if (transaction != null)
+            {
+                return false;
+            }
+            _context.Transactions.Add(new Transaction
+            {
+                transactionID = transactionID,
+                employeeID = employeeID,
+                jobID = jobID,
+                paymentToEmployee = paymentToEmployee,
+                paymentToProvider = paymentToProvider,
+                date = date
+            });
+            _context.SaveChanges();
+            return true;
         }
     }
 }

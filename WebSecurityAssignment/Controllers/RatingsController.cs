@@ -75,16 +75,16 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Ratings/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string employeeID, int jobID)
         {
-            if (id == null)
+            if (employeeID == null || jobID == null)
             {
                 return NotFound();
             }
 
             var ratings = await _context.Ratings
                 .Include(r => r.ApplicationUser)
-                .FirstOrDefaultAsync(m => m.employeeID == id);
+                .FirstOrDefaultAsync(m => m.employeeID == employeeID && m.jobID == jobID);
             if (ratings == null)
             {
                 return NotFound();
@@ -109,6 +109,35 @@ namespace WebSecurityAssignment.Controllers
                 }
             }
             ViewBag.Error = "An error occurred while deleting this rating. Please try again.";
+            return View();
+        }
+
+        // GET: Ratings/Create
+        public IActionResult Create()
+        {
+            ViewData["employeeID"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["jobID"] = new SelectList(_context.Jobs, "jobID", "jobID");
+            return View();
+        }
+
+        // POST: Ratings/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Ratings rating)
+        {
+            var ratings = _context.Ratings;
+            if (ModelState.IsValid)
+            {
+                RatingsRepo ratingsRepo = new RatingsRepo(_context);
+                var success = ratingsRepo.CreateRating(rating.jobID, rating.employeeID, rating.review, rating.score);
+                if (success)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            ViewBag.Error = "An error occurred while creating this role. Please try again.";
             return View();
         }
 
