@@ -1,0 +1,42 @@
+﻿@model WebSecurityAssignment.Data.Address
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Address</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.streetAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.streetAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.city)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.city)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.province)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.province)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.postalCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.postalCode)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.addressID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

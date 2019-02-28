@@ -1,0 +1,69 @@
+﻿@model WebSecurityAssignment.Data.Job
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Job</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="jobID" />
+            <div class="form-group">
+                <label asp-for="title" class="control-label"></label>
+                <input asp-for="title" class="form-control" />
+                <span asp-validation-for="title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="description" class="control-label"></label>
+                <input asp-for="description" class="form-control" />
+                <span asp-validation-for="description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="employerID" class="control-label"></label>
+                <select asp-for="employerID" class="form-control" asp-items="ViewBag.employerID"></select>
+                <span asp-validation-for="employerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="employeeID" class="control-label"></label>
+                <input asp-for="employeeID" class="form-control" />
+                <span asp-validation-for="employeeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="amount" class="control-label"></label>
+                <input asp-for="amount" class="form-control" />
+                <span asp-validation-for="amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dateNeeded" class="control-label"></label>
+                <input asp-for="dateNeeded" class="form-control" />
+                <span asp-validation-for="dateNeeded" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="dateExpired" class="control-label"></label>
+                <input asp-for="dateExpired" class="form-control" />
+                <span asp-validation-for="dateExpired" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="addressID" class="control-label"></label>
+                <select asp-for="addressID" class="form-control" asp-items="ViewBag.addressID"></select>
+                <span asp-validation-for="addressID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
