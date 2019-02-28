@@ -43,27 +43,5 @@ namespace WebSecurityAssignment.Repositories
             }
             return null;
         }
-
-        public bool RemoveRating(string employeeID, int jobID)
-        {
-            var rating = _context.Ratings.Where(r => r.employeeID == employeeID && r.jobID == jobID).FirstOrDefault();
-
-            _context.Ratings.Remove(rating);
-            _context.SaveChanges();
-            return true;
-        }
-
-        public bool UpdateRating(int jobID, string employeeID, string review, float score)
-        {
-            var rating = _context.Ratings.Where(r => r.employeeID == employeeID && r.jobID == jobID).FirstOrDefault();
-            // Remember you can't update the primary key without 
-            // causing trouble.  Just update the review and score
-            // for now.
-            rating.score = score;
-            rating.review = review;
-
-            _context.SaveChanges();
-            return true;
-        }
     }
 }

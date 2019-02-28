@@ -1,0 +1,48 @@
+﻿@model WebSecurityAssignment.Data.Transaction
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Transaction</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.paymentToEmployee)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.paymentToEmployee)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.paymentToProvider)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.paymentToProvider)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Job)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Job.jobID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicationUser)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicationUser.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.transactionID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

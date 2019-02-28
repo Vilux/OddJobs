@@ -1,0 +1,51 @@
+﻿@model WebSecurityAssignment.Data.Transaction
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Transaction</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="employeeID" class="control-label"></label>
+                <select asp-for="employeeID" class ="form-control" asp-items="ViewBag.employeeID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="jobID" class="control-label"></label>
+                <select asp-for="jobID" class ="form-control" asp-items="ViewBag.jobID"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="paymentToEmployee" class="control-label"></label>
+                <input asp-for="paymentToEmployee" class="form-control" />
+                <span asp-validation-for="paymentToEmployee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="paymentToProvider" class="control-label"></label>
+                <input asp-for="paymentToProvider" class="form-control" />
+                <span asp-validation-for="paymentToProvider" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="date" class="control-label"></label>
+                <input asp-for="date" class="form-control" />
+                <span asp-validation-for="date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
