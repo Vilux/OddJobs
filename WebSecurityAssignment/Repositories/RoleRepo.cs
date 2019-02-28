@@ -22,6 +22,8 @@ namespace WebSecurityAssignment.Repositories
 			var roles = _context.Roles;
 			List<RoleVM> roleList = new List<RoleVM>();
 
+          
+
 			foreach (var item in roles)
 			{
 				roleList.Add(new RoleVM() { RoleName = item.Name, Id = item.Id });

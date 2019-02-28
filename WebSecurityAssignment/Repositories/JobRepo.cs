@@ -18,6 +18,7 @@ namespace WebSecurityAssignment.Repositories
         public List<Job> GetAllJobs()
         {
             var jobs = _context.Jobs;
+
             List<Job> jobList = new List<Job>();
 
             foreach (var item in jobs)
@@ -33,6 +34,25 @@ namespace WebSecurityAssignment.Repositories
                 });
             }
             return jobList;
+        }
+
+        public Job GetJob(int jobID)
+        {
+            var job = _context.Jobs.Where(j => j.jobID == jobID).FirstOrDefault();
+            if (job != null)
+            {
+                return new Job() {
+                    jobID = job.jobID,
+                    title = job.title,
+                    description = job.description,
+                    employeeID = job.employeeID,
+                    employerID = job.employerID,
+                    amount = job.amount,
+                    dateNeeded = job.dateNeeded,
+                    dateExpired = job.dateExpired,
+                    addressID = job.addressID };
+            }
+            return null;
         }
     }
 }
