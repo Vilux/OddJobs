@@ -18,6 +18,7 @@ namespace WebSecurityAssignment.Repositories
         public List<Job> GetAllJobs()
         {
             var jobs = _context.Jobs;
+
             List<Job> jobList = new List<Job>();
 
             foreach (var item in jobs)
