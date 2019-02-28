@@ -53,9 +53,11 @@ namespace WebSecurityAssignment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("jobID,title,description,employerID,employeeID,amount,dateNeeded,dateExpired,addressID")] Job job)
         {
+            JobRepo jobRepo = new JobRepo(_context);
+
             if (ModelState.IsValid)
             {
-                _context.Add(job);
+                jobRepo.CreateJob(job);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -73,6 +75,7 @@ namespace WebSecurityAssignment.Controllers
             }
 
             var job = await _context.Jobs.FindAsync(id);
+
             if (job == null)
             {
                 return NotFound();
