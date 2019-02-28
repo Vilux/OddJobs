@@ -68,7 +68,7 @@ namespace WebSecurityAssignment.Data
         public virtual Job Job { get; set; }
     }
 
-    public class Rating
+    public class Ratings
     {
         [Key, Column(Order = 0)]
         public string employeeID { get; set; }
@@ -92,7 +92,7 @@ namespace WebSecurityAssignment.Data
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Application> Applications { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Rating> Ratings { get; set; }
+        public DbSet<Ratings> Ratings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -109,7 +109,7 @@ namespace WebSecurityAssignment.Data
             modelBuilder.Entity<Application>()
                 .HasKey(app => new { app.ApplicantID, app.JobID });
 
-            modelBuilder.Entity<Rating>()
+            modelBuilder.Entity<Ratings>()
                 .HasKey(app => new { app.employeeID, app.jobID });
 
             //---------------------------------------------------------------
@@ -144,7 +144,7 @@ namespace WebSecurityAssignment.Data
                 .HasForeignKey(fk => new { fk.employerID })
                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
-            modelBuilder.Entity<Rating>()
+            modelBuilder.Entity<Ratings>()
                .HasOne(r => r.ApplicationUser) // Parent
                .WithMany(t => t.Ratings) // Child
                .HasForeignKey(fk => new { fk.employeeID })

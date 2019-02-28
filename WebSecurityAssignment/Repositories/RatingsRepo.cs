@@ -15,24 +15,24 @@ namespace WebSecurityAssignment.Repositories
             this._context = context;
         }
 
-        public List<Rating> GetAllRatings()
+        public List<Ratings> GetAllRatings()
         {
             var ratings = _context.Ratings;
-            List<Rating> ratingList = new List<Rating>();
+            List<Ratings> ratingList = new List<Ratings>();
 
             foreach (var item in ratings)
             {
-                ratingList.Add(new Rating() { employeeID = item.employeeID, jobID = item.jobID });
+                ratingList.Add(new Ratings() { employeeID = item.employeeID, jobID = item.jobID });
             }
             return ratingList;
         }
 
-        public Rating GetRating(string employeeID, int jobID)
+        public Ratings GetRating(string employeeID, int jobID)
         {
             var rating = _context.Ratings.Where(r => r.employeeID == employeeID && r.jobID == jobID).FirstOrDefault();
             if (rating != null)
             {
-                return new Rating() { employeeID = rating.employeeID, jobID = rating.jobID };
+                return new Ratings() { employeeID = rating.employeeID, jobID = rating.jobID };
             }
             return null;
         }

@@ -15,7 +15,7 @@ namespace WebSecurityAssignment.Data
         public virtual ICollection<Application> Applications { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
         public virtual ICollection<Job> Jobs { get; set; }
-        public virtual ICollection<Rating> Ratings { get; set; }
+        public virtual ICollection<Ratings> Ratings { get; set; }
     }
 
 }
