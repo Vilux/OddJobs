@@ -6,42 +6,40 @@ using WebSecurityAssignment.Data;
 
 namespace WebSecurityAssignment.Repositories
 {
-    public class RatingsRepo
+    public class TransactionRepo
     {
         ApplicationDbContext _context;
 
-        public RatingsRepo(ApplicationDbContext context)
+        public TransactionRepo(ApplicationDbContext context)
         {
             this._context = context;
         }
 
-        public List<Ratings> GetAllRatings()
+        public List<Transaction> GetAllTransactions()
         {
-            var ratings = _context.Ratings;
-            List<Ratings> ratingList = new List<Ratings>();
+            var transactions = _context.Transactions;
+            List<Transaction> transactionList = new List<Transaction>();
 
-            foreach (var item in ratings)
+            foreach (var item in transactions)
             {
-                ratingList.Add(new Ratings() {
+                transactionList.Add(new Transaction() {
+                    transactionID = item.transactionID,
                     employeeID = item.employeeID,
                     jobID = item.jobID,
-                    score = item.score,
-                    review = item.review});
+                    paymentToEmployee = item.paymentToEmployee,
+                    paymentToProvider = item.paymentToProvider,
+                    date = item.date
+                });
             }
-            return ratingList;
+            return transactionList;
         }
 
-        public Ratings GetRating(string employeeID, int jobID)
+        public Transaction GetTransaction(int transactionID)
         {
-            var rating = _context.Ratings.Where(r => r.employeeID == employeeID && r.jobID == jobID).FirstOrDefault();
-            if (rating != null)
+            var transaction = _context.Transactions.Where(t => t.transactionID == transactionID).FirstOrDefault();
+            if (transaction != null)
             {
-                return new Ratings() {
-                    employeeID = rating.employeeID,
-                    jobID = rating.jobID,
-                    score = rating.score,
-                    review = rating.review
-                                       };
+                return new Transaction() { transactionID = transaction.transactionID };
             }
             return null;
         }

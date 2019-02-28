@@ -45,7 +45,7 @@ namespace WebSecurityAssignment.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            ViewBag.Error = "An error occurred while deleting this role. Please try again.";
+            ViewBag.Error = "An error occurred while deleting this rating. Please try again.";
             return View();
         }
 
@@ -62,7 +62,7 @@ namespace WebSecurityAssignment.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            ViewBag.Error = "An error occurred while deleting this role. Please try again.";
+            ViewBag.Error = "An error occurred while updating this rating. Please try again.";
             return View();
         }
     }
