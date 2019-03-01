@@ -70,9 +70,6 @@ namespace WebSecurityAssignment.Repositories
             float amount, DateTime dateNeeded, DateTime dateExpired, int addressID)
         {
             var job = _context.Jobs.Where(j => j.jobID == jobID).FirstOrDefault();
-            // Remember you can't update the primary key without 
-            // causing trouble.  Just update the review and score
-            // for now.
 
             job.title = title;
             job.description = description;
