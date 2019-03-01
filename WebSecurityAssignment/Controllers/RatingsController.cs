@@ -77,7 +77,7 @@ namespace WebSecurityAssignment.Controllers
         // GET: Ratings/Delete/5
         public async Task<IActionResult> Delete(string employeeID, int jobID)
         {
-            if (employeeID == null || jobID == null)
+            if (employeeID == null || jobID < 0)
             {
                 return NotFound();
             }
@@ -137,7 +137,7 @@ namespace WebSecurityAssignment.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            ViewBag.Error = "An error occurred while creating this role. Please try again.";
+            ViewBag.Error = "An error occurred while creating this rating. Please try again.";
             return View();
         }
 

@@ -16,7 +16,6 @@ namespace WebSecurityAssignment.Data
         public string city { get; set; }
         public string province { get; set; }
         public string postalCode { get; set; }
-
         public virtual ICollection<Job> Jobs
         { get; set; }
     }

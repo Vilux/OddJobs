@@ -17,8 +17,8 @@
                         <th>
                             @Html.DisplayNameFor(model => model.title)
                         </th>                    
-                        <th>
-                            @Html.DisplayNameFor(model => model.employeeID)
+                        <th >
+                            @Html.DisplayNameFor(model => model.employerID)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.amount)
@@ -38,26 +38,30 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
+                        <tr id="@Html.DisplayFor(modelItem => item.jobID)">
+                            <td class="job_title">
                                 @Html.DisplayFor(modelItem => item.title)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.employeeID)
+                            <td class="job_employer">
+                                @Html.DisplayFor(modelItem => item.employerID)
                             </td>
-                            <td>
+                            <td class="job_amount">
                                 @Html.DisplayFor(modelItem => item.amount)
                             </td>
-                            <td>
+                            <td class="job_dateNeeded">
                                 @Html.DisplayFor(modelItem => item.dateNeeded)
                             </td>
-                            <td>
+                            <td class="job_dateExpired">
                                 @Html.DisplayFor(modelItem => item.dateExpired)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Address.addressID)
+                            <td class="job_address">
+                                @Html.DisplayFor(modelItem => item.Address.streetAddress) @Html.DisplayFor(modelItem => item.Address.city), @Html.DisplayFor(modelItem => item.Address.province)
+                            </td>
+                            <td class="job_description" style="display:none;">
+                                @Html.DisplayFor(modelItem => item.description)
                             </td>
                         </tr>
+                     
                     }
                 </tbody>
             </table>
@@ -65,15 +69,16 @@
         <div id="feed_details">
 
             <section id="details">
-                <h3>Mow my lawn</h3>
-                <p>
+                <h3 id="details_title">Mow my lawn</h3>
+                <p id="details_description">
                     Need my lawn mowed since I hurt my back and cant push the mower anymore.
                     Should take no longer than afew hours
                 </p>
-                <p>Start Date: Anytime </p>
-                <p>Complete by: Febuary 30th 2019</p>
-                <p>Location: <a>1234 Jeggins Ave. Cooltown</a></p>
-                <p>Posted by: <a>biglawnbrian</a></p>
+                <p id="details_dateNeeded">Start Date: Anytime </p>
+                <p id="details_dateExpired">Complete by: Febuary 30th 2019</p>
+                <p id="details_amount"></p>
+                <p>Location: <a id="details_address">1234 Jeggins Ave. Cooltown</a></p>
+                <p>Posted by: <a id="details_employer">biglawnbrian</a></p>
                 <section id="map_container">
                     <span class="metadata-marker" style="display: none;" data-region_tag="html-body"></span>
                     <div id="map"></div>
@@ -89,6 +94,7 @@
                     </script>
                     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8owFdPbt2-OK8FLSbhSfZe7qry90ptOA&callback=initMap"
                             async defer></script>
+                    <script src="~/js/feed_details.js"></script>
                 </section>
             </section>
             <button class="apply_button">Apply</button>

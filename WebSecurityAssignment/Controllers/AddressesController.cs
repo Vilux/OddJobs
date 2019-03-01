@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
+using WebSecurityAssignment.Repositories;
 
 namespace WebSecurityAssignment.Controllers
 {
@@ -19,26 +20,17 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Addresses
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Addresses.ToListAsync());
+            AddressesRepo addressesRepo = new AddressesRepo(_context);
+            return View(addressesRepo.GetAllAddresses());
         }
 
         // GET: Addresses/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int addressID)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var address = await _context.Addresses
-                .FirstOrDefaultAsync(m => m.addressID == id);
-            if (address == null)
-            {
-                return NotFound();
-            }
-
+            AddressesRepo addressesRepo = new AddressesRepo(_context);
+            Address address = addressesRepo.GetAddress(addressID);
             return View(address);
         }
 
@@ -53,15 +45,20 @@ namespace WebSecurityAssignment.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("addressID,streetAddress,city,province,postalCode")] Address address)
+        public ActionResult Create(Address address)
         {
+            var addresses = _context.Addresses;
             if (ModelState.IsValid)
             {
-                _context.Add(address);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                AddressesRepo addressesRepo = new AddressesRepo(_context);
+                var success = addressesRepo.CreateAddress(address.addressID, address.streetAddress, address.city, address.province, address.postalCode);
+                if (success)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            return View(address);
+            ViewBag.Error = "An error occurred while creating this address. Please try again.";
+            return View();
         }
 
         // GET: Addresses/Edit/5
@@ -85,34 +82,20 @@ namespace WebSecurityAssignment.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("addressID,streetAddress,city,province,postalCode")] Address address)
+        public ActionResult Update(Address address)
         {
-            if (id != address.addressID)
-            {
-                return NotFound();
-            }
-
+            var addresses = _context.Addresses;
             if (ModelState.IsValid)
             {
-                try
+                AddressesRepo addressesRepo = new AddressesRepo(_context);
+                var success = addressesRepo.UpdateAddress(address.addressID, address.streetAddress, address.city, address.province, address.postalCode);
+                if (success)
                 {
-                    _context.Update(address);
-                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AddressExists(address.addressID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
-            return View(address);
+            ViewBag.Error = "An error occurred while updating this address. Please try again.";
+            return View();
         }
 
         // GET: Addresses/Delete/5
@@ -136,12 +119,20 @@ namespace WebSecurityAssignment.Controllers
         // POST: Addresses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(Address address)
         {
-            var address = await _context.Addresses.FindAsync(id);
-            _context.Addresses.Remove(address);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var addresses = _context.Addresses;
+            if (ModelState.IsValid)
+            {
+                AddressesRepo addressesRepo = new AddressesRepo(_context);
+                var success = addressesRepo.RemoveAddress(address.addressID);
+                if (success)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            ViewBag.Error = "An error occurred while deleting this address. Please try again.";
+            return View();
         }
 
         private bool AddressExists(int id)

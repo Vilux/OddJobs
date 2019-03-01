@@ -89,3 +89,8 @@ body {
     border-radius: 10px;
     background-color: #b3b3b3;
 }
+
+tr:hover {
+    background-color: #d1d1d1; 
+    cursor: pointer;
+}
