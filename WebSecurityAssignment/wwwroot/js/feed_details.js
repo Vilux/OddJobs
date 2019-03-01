@@ -57,5 +57,28 @@
         details_address.innerHTML = "";
         var address_node = document.createTextNode(address);
         details_address.appendChild(address_node);
+
+  
+
+        $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyD8owFdPbt2-OK8FLSbhSfZe7qry90ptOA',
+            function (data) {
+
+                console.log(JSON.stringify(data));
+                longitude = parseFloat(JSON.stringify(data.results[0].geometry.location.lng));
+                latitude = parseFloat(JSON.stringify(data.results[0].geometry.location.lat));
+
+                latLng = { lat: latitude, lng: longitude };
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: latLng,
+                    zoom: 16
+                });
+
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map,
+                    title: 'Job Location'
+                });
+        });  
     });
 });

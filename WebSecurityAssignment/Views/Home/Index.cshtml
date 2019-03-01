@@ -55,7 +55,7 @@
                                 @Html.DisplayFor(modelItem => item.dateExpired)
                             </td>
                             <td class="job_address">
-                                @Html.DisplayFor(modelItem => item.Address.addressID)
+                                @Html.DisplayFor(modelItem => item.Address.streetAddress) @Html.DisplayFor(modelItem => item.Address.city), @Html.DisplayFor(modelItem => item.Address.province)
                             </td>
                             <td class="job_description" style="display:none;">
                                 @Html.DisplayFor(modelItem => item.description)
@@ -94,6 +94,7 @@
                     </script>
                     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8owFdPbt2-OK8FLSbhSfZe7qry90ptOA&callback=initMap"
                             async defer></script>
+                    <script src="~/js/feed_details.js"></script>
                 </section>
             </section>
             <button class="apply_button">Apply</button>
