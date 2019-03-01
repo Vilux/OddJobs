@@ -65,21 +65,9 @@ namespace WebSecurityAssignment.Repositories
             return true;
         }
 
-        public bool UpdateJob(int jobID, string title, 
-            string description, string employerID, string employeeID,
-            float amount, DateTime dateNeeded, DateTime dateExpired, int addressID)
+        public bool UpdateJob(Job job)
         {
-            var job = _context.Jobs.Where(j => j.jobID == jobID).FirstOrDefault();
-
-            job.title = title;
-            job.description = description;
-            job.employerID = employerID;
-            job.employeeID = employeeID;
-            job.amount = amount;
-            job.dateNeeded = dateNeeded;
-            job.dateExpired = dateExpired;
-            job.addressID = addressID;
-
+            _context.Update(job);
             _context.SaveChanges();
             return true;
         }
