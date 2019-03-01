@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
 using WebSecurityAssignment.Models;
 
@@ -20,9 +21,9 @@ namespace WebSecurityAssignment.Controllers
 
         public IActionResult Index()
 		{
-            var jobList = db.Jobs.ToList();
+            var applicationDbContext = db.Jobs.Include(j => j.Address).Include(j => j.ApplicationUser);       
 
-            return View(jobList);
+            return View(applicationDbContext.ToList());
         }
 
 		public IActionResult About()
