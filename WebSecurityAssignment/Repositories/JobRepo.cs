@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebSecurityAssignment.Data;
+using WebSecurityAssignment.ViewModels;
 
 namespace WebSecurityAssignment.Repositories
 {
@@ -15,56 +16,47 @@ namespace WebSecurityAssignment.Repositories
             this._context = context;
         }
 
-        public List<Job> GetAllJobs()
+        public List<JobVM> GetAllJobs()
         
         {
             var jobs = _context.Jobs ;
 
-            //var jobsAddresses =
-            //    from j in _context.Jobs
-            //    from a in _context.Addresses
-            //    where j.addressID == a.addressID
-            //    select new
-            //    {
-            //        j.jobID,
-            //        j.title,
-            //        j.description,
-            //        j.employeeID,
-            //        j.employerID,
-            //        j.amount,
-            //        j.dateNeeded,
-            //        j.dateExpired,
-            //        j.addressID,
-            //        a.streetAddress,
-            //        a.city,
-            //        a.province,
-            //        a.postalCode
-            //    };
+            List<JobVM> jobList = new List<JobVM>();
 
-            //var jobsAddressesUsers =
-            //    from ja in jobsAddresses
-            //    from c in _context.Users
-            //    where ja.employeeID
-
-            List <Job> jobList = new List<Job>();
-           
             foreach (var item in jobs)
             {
                 var completeAddress = _context.Addresses.Find(item.addressID);
+                var employee = _context.Users.Find(item.employeeID);
+                var employer = _context.Users.Find(item.employerID);
 
-                jobList.Add(new Job() {             
-                    jobID = item.jobID,
-                    title = item.title,
-                    description = item.description,
-                    employeeID = item.employeeID,
-                    employerID = item.employerID,
-                    amount = item.amount,
+                //will implement try catch - AJ
+
+                if(employee==null)
+                {
+                    employee = new ApplicationUser();
+
+                }
+
+                if (employer == null)
+                {
+                    employee = new ApplicationUser();
+
+                }
+
+                jobList.Add(new JobVM()
+                {
+                    ID = item.jobID,
+                    Title = item.title,
+                    Description = item.description,
+                    EmployeeName = (employee.FirstName + " " + employee.LastName),
+                    EmployerName = (employer.FirstName + " " + employer.LastName),
+                    Amount = item.amount,
                     dateNeeded = item.dateNeeded,
                     dateExpired = item.dateExpired,
-                    addressID = item.addressID,
-                    //address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode)
+                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode)
                 });
             }
+
             return jobList;
         }
 

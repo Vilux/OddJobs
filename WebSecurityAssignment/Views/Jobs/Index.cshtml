@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebSecurityAssignment.Data.Job>
+﻿@model IEnumerable<WebSecurityAssignment.ViewModels.JobVM>
 
 
 @{
@@ -13,20 +13,16 @@
 <table class="table">
     <thead>
         <tr>
+            
             <th>
-                @Html.DisplayNameFor(model => model.jobID)
+                @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.title)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
+           
             <th>
-                @Html.DisplayNameFor(model => model.description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.employeeID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.amount)
+                @Html.DisplayNameFor(model => model.Amount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.dateNeeded)
@@ -37,9 +33,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicationUser)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -47,20 +41,16 @@
         @foreach (var item in Model)
         {
             <tr>
+                
                 <td>
-                    @Html.DisplayFor(modelItem => item.jobID)
+                    @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.title)
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
+               
                 <td>
-                    @Html.DisplayFor(modelItem => item.description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.employeeID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.amount)
+                    @Html.DisplayFor(modelItem => item.Amount)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.dateNeeded)
@@ -69,15 +59,13 @@
                     @Html.DisplayFor(modelItem => item.dateExpired)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Address.addressID)
+                    @Html.DisplayFor(modelItem => item.Address)
                 </td>
+                
                 <td>
-                    @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.jobID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.jobID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.jobID">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                 </td>
             </tr>
         }

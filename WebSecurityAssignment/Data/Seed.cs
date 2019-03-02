@@ -10,7 +10,9 @@ namespace WebSecurityAssignment.Data
 {
 	public static class Seed
 	{
-		public static async Task CreateRoles(IServiceProvider serviceProvider,
+        
+
+        public static async Task CreateRoles(IServiceProvider serviceProvider,
 			IConfiguration Configuration)
 		{
 			// adding customs roles
@@ -58,6 +60,6 @@ namespace WebSecurityAssignment.Data
 				}
 			}
 		}
-	}
+    }
 }
 

@@ -17,6 +17,7 @@ namespace WebSecurityAssignment.Controllers
         public HomeController(ApplicationDbContext db)
         {
             this.db = db;
+            Seeder seeder = new Seeder(db);
         }
 
         public IActionResult Index()
