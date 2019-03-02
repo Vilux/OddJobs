@@ -14,9 +14,10 @@ namespace WebSecurityAssignment
 {
 	public class Program
 	{
-		public static void Main(string[] args)
+        public static void Main(string[] args)
 		{
-			var host = BuildWebHost(args);
+            
+            var host = BuildWebHost(args);
 			using (var scope = host.Services.CreateScope())
 			{
 				var services = scope.ServiceProvider;
@@ -34,6 +35,8 @@ namespace WebSecurityAssignment
 				}
 			}
 			host.Run();
+
+   
 		}
 		public static IWebHost BuildWebHost(string[] args) =>
 		WebHost.CreateDefaultBuilder(args)
