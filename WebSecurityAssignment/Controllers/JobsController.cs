@@ -28,6 +28,7 @@ namespace WebSecurityAssignment.Controllers
             return View(jobs);
         }
 
+
         // GET: Jobs/Details/5
         public IActionResult Details(int id)
         {
