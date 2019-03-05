@@ -111,11 +111,11 @@ namespace WebSecurityAssignment.Data
                         amount = 23,
                         dateNeeded = dateNeeded,
                         dateExpired = dateExpired,
-                        addressID = 1 
+                        addressID = 1
                     },
                     new Job{ jobID = 2, title = "Organize my storage",
                         description = "I have a 10 x 18 ft garage and I need all items in it cleaned, sorted and labeled. I'll provide all packaging materials.",
-                        employerID = "2",
+                        employerID = "3",
                         amount = 75,
                         dateNeeded = dateNeeded,
                         dateExpired = dateExpired,
@@ -123,7 +123,7 @@ namespace WebSecurityAssignment.Data
                     },
                     new Job{ jobID = 3, title = "Roof repair",
                         description = "Our roof has been leaking for almost a week now, Need someone to check and do the necessary repairs.",
-                        employerID = "2",
+                        employerID = "4",
                         amount = 60,
                         dateNeeded = dateNeeded,
                         dateExpired = dateExpired,
@@ -131,11 +131,11 @@ namespace WebSecurityAssignment.Data
                     },
                     new Job{ jobID = 4, title = "Tire swap",
                         description = "Swap out winter tires to all-season. Vehicle: Ford F-150.",
-                        employerID = "2",
+                        employerID = "5",
                         amount = 10,
                         dateNeeded = dateNeeded,
                         dateExpired = dateExpired,
-                        addressID = 4 
+                        addressID = 4
                     },
 
                 };
