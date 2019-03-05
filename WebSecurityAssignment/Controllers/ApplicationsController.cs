@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
+using WebSecurityAssignment.Repositories;
 
 namespace WebSecurityAssignment.Controllers
 {
@@ -21,8 +22,10 @@ namespace WebSecurityAssignment.Controllers
         // GET: Applications
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Applications.Include(a => a.ApplicationUser).Include(a => a.Job);
-            return View(await applicationDbContext.ToListAsync());
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+            var applications = applicationRepo.GetAllApplications();
+
+            return View(applications);
         }
 
         // GET: Applications/Details/5

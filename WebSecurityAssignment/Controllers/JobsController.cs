@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,6 +30,7 @@ namespace WebSecurityAssignment.Controllers
             return View(jobs);
         }
 
+
         // GET: Jobs/Details/5
         public IActionResult Details(int id)
         {
@@ -40,8 +43,12 @@ namespace WebSecurityAssignment.Controllers
         // GET: Jobs/Create
         public IActionResult Create()
         {
+
+            List<string> id = new List<string>();
+            id.Add(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
             ViewData["addressID"] = new SelectList(_context.Addresses, "addressID", "addressID");
-            ViewData["employerID"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["employerID"] = new SelectList(id);
             return View();
         }
 

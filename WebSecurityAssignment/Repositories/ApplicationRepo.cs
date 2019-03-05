@@ -1,88 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using WebSecurityAssignment.Data;
+using WebSecurityAssignment.ViewModels;
 
 namespace WebSecurityAssignment.Repositories
 {
-    class ApplicationRepo
+    public class ApplicationRepo
     {
         ApplicationDbContext _context;
 
-        public ApplicationRepo (ApplicationDbContext context)
+        public ApplicationRepo(ApplicationDbContext context)
         {
             this._context = context;
         }
 
-        public List<Application> GetAllApplications()
+        public List<ApplicationVM> GetAllApplications()
         {
             var applications = _context.Applications;
-            List<Application> applicationList = new List<Application>();
+
+            List<ApplicationVM> applicationList = new List<ApplicationVM>();
 
             foreach (var item in applications)
             {
-                applicationList.Add(new Application()
+                var employee = _context.Users.Find(item.ApplicantID);
+                var job = _context.Jobs.Find(item.JobID);
+                var employer = _context.Users.Find(job.employerID);
+
+                applicationList.Add(new ApplicationVM()
                 {
-                    ApplicantID = item.ApplicantID,
-                    JobID = item.JobID,
-                    Comment = item.Comment
+                    EmployeeFN  = employee.FirstName,
+                    EmployeeLN  = employee.LastName,
+                    EmployerFN  = employer.FirstName,
+                    EmployerLN  = employer.LastName,
+                    JobTitle    = job.title,
+                    JobID       = job.jobID,
+                    comments    = item.Comment
                 });
             }
             return applicationList;
-        }
-
-        public Application GetApplication(string ApplicantID, int JobID)
-        {
-            var application = _context.Applications.Where(a => a.ApplicantID == ApplicantID && a.JobID == JobID).FirstOrDefault();
-            if (application != null)
-            {
-                return new Application()
-                {
-                    ApplicantID = application.ApplicantID,
-                    JobID = application.JobID,
-                    Comment = application.Comment
-                };
-            }
-            return null;
-        }
-
-        public bool RemoveApplication(string ApplicantID, int JobID)
-        {
-            var application = _context.Applications.Where(a => a.ApplicantID == ApplicantID && a.JobID == JobID).FirstOrDefault();
-
-            _context.Applications.Remove(application);
-            _context.SaveChanges();
-            return true;
-        }
-
-        public bool UpdateApplication(string ApplicantID, int JobID, string Comment)
-        {
-            var application = _context.Applications.Where(a => a.ApplicantID == ApplicantID && a.JobID == JobID).FirstOrDefault();
-            // Remember you can't update the primary key without 
-            // causing trouble.  Just update the review and score
-            // for now.
-            application.Comment = Comment;
-
-            _context.SaveChanges();
-            return true;
-        }
-
-        public bool CreateApplication(string ApplicantID, int JobID, string Comment)
-        {
-            var application = GetApplication(ApplicantID, JobID);
-            if (application != null)
-            {
-                return false;
-            }
-            _context.Applications.Add(new Application
-            {
-                ApplicantID = ApplicantID,
-                JobID = JobID,
-                Comment = Comment
-            });
-            _context.SaveChanges();
-            return true;
         }
     }
 }
