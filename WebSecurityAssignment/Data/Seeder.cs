@@ -67,11 +67,36 @@ namespace WebSecurityAssignment.Data
                     new Job{ jobID = 1, title = "Mow my lawn",
                         description = "Need my lawn mowed since I hurt my back and cant push the mower anymore. Should take no longer than afew hours",
                         employerID = "2",
-                        amount = 10,
+                        amount = 23,
                         dateNeeded = dateNeeded,
                         dateExpired = dateExpired,
                         addressID = 1 
-                    }
+                    },
+                    new Job{ jobID = 2, title = "Organize my storage",
+                        description = "I have a 10 x 18 ft garage and I need all items in it cleaned, sorted and labeled. I'll provide all packaging materials.",
+                        employerID = "2",
+                        amount = 75,
+                        dateNeeded = dateNeeded,
+                        dateExpired = dateExpired,
+                        addressID = 2
+                    },
+                    new Job{ jobID = 3, title = "Roof repair",
+                        description = "Our roof has been leaking for almost a week now, Need someone to check and do the necessary repairs.",
+                        employerID = "2",
+                        amount = 60,
+                        dateNeeded = dateNeeded,
+                        dateExpired = dateExpired,
+                        addressID = 3
+                    },
+                    new Job{ jobID = 4, title = "Tire swap",
+                        description = "Swap out winter tires to all-season. Vehicle: Ford F-150.",
+                        employerID = "2",
+                        amount = 10,
+                        dateNeeded = dateNeeded,
+                        dateExpired = dateExpired,
+                        addressID = 4
+                    },
+
                 };
 
                 _context.Jobs.AddRange(seedJobs);
