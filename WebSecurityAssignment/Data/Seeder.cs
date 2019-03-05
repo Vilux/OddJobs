@@ -24,8 +24,10 @@ namespace WebSecurityAssignment.Data
             {
                 Address[] seedAddresses = new Address[]
                 {
-                    new Address{ streetAddress = "1280 Waverley Avenue", city = "Vancouver", province = "BC", postalCode = "V5W2C3" },
-                    new Address{ streetAddress = "6088 Beresford Street", city = "Burnaby", province = "BC", postalCode = "V5G1K2" },
+                    new Address{ addressID = 1, streetAddress = "1280 Waverley Avenue", city = "Vancouver", province = "BC", postalCode = "V5W2C3" },
+                    new Address{ addressID = 2, streetAddress = "6088 Beresford Street", city = "Burnaby", province = "BC", postalCode = "V5G1K2" },
+                    new Address{ addressID = 3, streetAddress = "11049 Fuller Crescent Street", city = "Delta", province = "BC", postalCode = "V4C2C8" },
+                    new Address{ addressID = 4, streetAddress = "1102 Salter Street", city = "New Westminster", province = "BC", postalCode = " V3M6W7" },
                 };
 
                 _context.Addresses.AddRange(seedAddresses);
@@ -68,7 +70,7 @@ namespace WebSecurityAssignment.Data
                         amount = 10,
                         dateNeeded = dateNeeded,
                         dateExpired = dateExpired,
-                        addressID = 8
+                        addressID = 1
                     }
                 };
 
