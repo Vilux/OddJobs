@@ -49,6 +49,8 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account.Manage
             public string PhoneNumber { get; set; }
         }
 
+
+        //apparently this is where you update the account information
         public async Task<IActionResult> OnGetAsync()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -57,7 +59,7 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            var userName = await _userManager.GetUserNameAsync(user);
+            var userName = await _userManager.GetEmailAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
@@ -95,6 +97,13 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account.Manage
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
                     throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
+                }
+                // Stephen: I added this. It basicly sets the username to be the same as the email.
+                var setUserNameResult = await _userManager.SetUserNameAsync(user, Input.Email);
+                if (!setUserNameResult.Succeeded)
+                {
+                    var userId = await _userManager.GetUserIdAsync(user);
+                    throw new InvalidOperationException($"Unexpected error occurred setting uername for user with ID '{userId}'.");
                 }
             }
 
