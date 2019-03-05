@@ -7,6 +7,7 @@ namespace WebSecurityAssignment.ViewModels
 {
     public class ApplicationVM
     {
+        public int ID { get; set; }
         public string EmployerFN { get; set; }
         public string EmployerLN { get; set; }
         public string EmployeeFN { get; set; }
