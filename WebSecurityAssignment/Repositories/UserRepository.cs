@@ -23,8 +23,11 @@ namespace WebSecurityAssignment.Repositories
 		{
 			var users = _context.Users.Select(u => new UserVM()
 			{
-				Email = u.Email
-			});
+				Email = u.Email,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+
+            });
 			return users;
 		}
 
