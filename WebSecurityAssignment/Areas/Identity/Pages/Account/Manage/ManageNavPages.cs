@@ -8,6 +8,7 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {
+
         public static string Index => "Index";
 
         public static string ChangePassword => "ChangePassword";
