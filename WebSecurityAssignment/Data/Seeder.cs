@@ -70,7 +70,7 @@ namespace WebSecurityAssignment.Data
                         amount = 10,
                         dateNeeded = dateNeeded,
                         dateExpired = dateExpired,
-                        addressID = 1
+                        addressID = 1 
                     }
                 };
 
