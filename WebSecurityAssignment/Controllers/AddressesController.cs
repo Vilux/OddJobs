@@ -121,18 +121,13 @@ namespace WebSecurityAssignment.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(Address address)
         {
-            //var addresses = _context.Addresses;
+
             if (ModelState.IsValid)
             {
                 AddressesRepo addressesRepo = new AddressesRepo(_context);
-
-                //var success = addressesRepo.RemoveAddress(address.addressID);
-                //if (success)
-                {
-                    addressesRepo.RemoveAddress(address.addressID);
-                    return RedirectToAction(nameof(Index));
-                }
+                addressesRepo.RemoveAddress(address.addressID);
             }
+
             ViewBag.Error = "An error occurred while deleting this address. Please try again.";
             return View();
         }
