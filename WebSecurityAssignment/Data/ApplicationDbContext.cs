@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebSecurityAssignment.ViewModels;
 
 namespace WebSecurityAssignment.Data
 {
@@ -149,5 +150,7 @@ namespace WebSecurityAssignment.Data
                .HasForeignKey(fk => new { fk.employeeID })
                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
         }
+
+        public DbSet<WebSecurityAssignment.ViewModels.ApplicationVM> ApplicationVM { get; set; }
     }
 }
