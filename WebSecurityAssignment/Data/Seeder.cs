@@ -143,6 +143,18 @@ namespace WebSecurityAssignment.Data
                 _context.Jobs.AddRange(seedJobs);
                 _context.SaveChanges();
             }
+
+            if (_context.Applications.Count() == 0)
+            {
+                Application [] seedApplications = new Application[]
+                {
+                    new Application{ ApplicantID = "5", JobID = 2, Comment = "sample comment" },
+                    new Application{ ApplicantID = "2", JobID = 3, Comment = "sample comment" }
+                };
+
+                _context.Applications.AddRange(seedApplications);
+                _context.SaveChanges();
+            }
         }
     }
 
