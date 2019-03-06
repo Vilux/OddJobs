@@ -22,8 +22,10 @@ namespace WebSecurityAssignment.Controllers
         }
 
 
-        public IActionResult Index(string id)
+        public IActionResult Index()
         {
+            var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);​
+
             var listings = _context.Jobs.Where(j => j.employerID == id);           
 
             return View(listings.ToList());
