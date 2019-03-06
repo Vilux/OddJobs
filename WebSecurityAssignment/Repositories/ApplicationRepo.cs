@@ -36,10 +36,53 @@ namespace WebSecurityAssignment.Repositories
                     EmployerLN  = employer.LastName,
                     JobTitle    = job.title,
                     JobID       = job.jobID,
+                    ApplicantID = employee.Id,
                     comments    = item.Comment
                 });
             }
             return applicationList;
+        }
+
+        public ApplicationVM GetApplication(string applicantID, int jobID)
+        {
+            var application = _context.Applications.Where(a => a.ApplicantID == applicantID && a.JobID == jobID).FirstOrDefault();
+
+            var employee = _context.Users.Find(applicantID);
+            var job = _context.Jobs.Find(jobID);
+            var employer = _context.Users.Find(job.employerID);
+
+            if (application != null)
+            {
+                return new ApplicationVM()
+                {
+                    EmployerFN = employer.FirstName,
+                    EmployerLN = employer.LastName,
+                    EmployeeFN = employee.FirstName,
+                    EmployeeLN = employee.LastName,
+                    JobTitle = job.title,
+                    ApplicantID = employee.Id,
+                    JobID = job.jobID,
+                    comments = application.Comment,
+                };
+            }
+            return null;
+        }
+
+        public bool DeleteApplication(string applicantID, int jobID)
+        {
+            var application = _context.Applications.Where(a => a.ApplicantID == applicantID && a.JobID == jobID).FirstOrDefault();
+
+            _context.Applications.Remove(application);
+            _context.SaveChanges();
+            return true;
+        }
+
+
+        public bool UpdateApplication(Application application)
+        {
+            _context.Update(application);
+            _context.SaveChanges();
+            return true;
         }
     }
 }

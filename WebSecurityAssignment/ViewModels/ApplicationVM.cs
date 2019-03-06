@@ -13,6 +13,7 @@ namespace WebSecurityAssignment.ViewModels
         public string EmployeeFN { get; set; }
         public string EmployeeLN { get; set; }
         public string JobTitle { get; set; }
+        public string ApplicantID { get; set; }
         public int    JobID { get; set; }
         public string comments { get; set; }
     }

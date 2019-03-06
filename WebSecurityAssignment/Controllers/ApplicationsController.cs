@@ -113,7 +113,7 @@ namespace WebSecurityAssignment.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ApplicationExists(application.ApplicantID))
+                    if (!ApplicationExists(application.ApplicantID, application.JobID))
                     {
                         return NotFound();
                     }
@@ -129,40 +129,46 @@ namespace WebSecurityAssignment.Controllers
             return View(application);
         }
 
-        // GET: Applications/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        // GET: Applications/Delete
+        public async Task<IActionResult> Delete(string applicantID, int jobID)
         {
-            if (id == null)
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+
+            if (applicantID == null || jobID == 0)
             {
                 return NotFound();
             }
 
-            var application = await _context.Applications
-                .Include(a => a.ApplicationUser)
-                .Include(a => a.Job)
-                .FirstOrDefaultAsync(m => m.ApplicantID == id);
-            if (application == null)
-            {
+           var application = applicationRepo.GetApplication(applicantID, jobID);
+
+           if (application == null)
+           {
                 return NotFound();
             }
 
             return View(application);
         }
 
-        // POST: Applications/Delete/5
+        // POST: Applications/Delete
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(string applicantID, int jobID)
         {
-            var application = await _context.Applications.FindAsync(id);
-            _context.Applications.Remove(application);
-            await _context.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+                applicationRepo.DeleteApplication(applicantID, jobID);
+            }
+
+            ViewBag.Error = "An error occurred while deleting this application. Please try again.";
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ApplicationExists(string id)
+     
+        private bool ApplicationExists(string applicantID, int jobID)
         {
-            return _context.Applications.Any(e => e.ApplicantID == id);
+            return _context.Applications.Any(a => a.ApplicantID == applicantID && a.JobID == jobID);
         }
+
     }
 }

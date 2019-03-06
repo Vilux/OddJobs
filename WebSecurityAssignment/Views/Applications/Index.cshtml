@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Job Applications</h2>
+<h2>Index</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -26,6 +26,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.JobTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicantID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.JobID)
@@ -55,6 +58,9 @@
                 @Html.DisplayFor(modelItem => item.JobTitle)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.ApplicantID)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.JobID)
             </td>
             <td>
@@ -63,7 +69,11 @@
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Delete" asp-route-id="@item.">Delete</a>
+                
+                @Html.ActionLink("Delete", "Delete", new { applicantID = item.ApplicantID, jobID = item.JobID })
+
+                
             </td>
         </tr>
 }

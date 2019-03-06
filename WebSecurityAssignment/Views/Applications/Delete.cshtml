@@ -1,4 +1,4 @@
-﻿@model WebSecurityAssignment.Data.Application
+﻿@model WebSecurityAssignment.ViewModels.ApplicationVM
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,26 +8,56 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Application</h4>
+    <h4>ApplicationVM</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Comment)
+            @Html.DisplayNameFor(model => model.EmployerFN)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Comment)
+            @Html.DisplayFor(model => model.EmployerFN)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ApplicationUser)
+            @Html.DisplayNameFor(model => model.EmployerLN)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ApplicationUser.Id)
+            @Html.DisplayFor(model => model.EmployerLN)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Job)
+            @Html.DisplayNameFor(model => model.EmployeeFN)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Job.jobID)
+            @Html.DisplayFor(model => model.EmployeeFN)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeLN)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeLN)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobTitle)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ApplicantID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ApplicantID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.JobID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.JobID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.comments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.comments)
         </dd>
     </dl>
     
