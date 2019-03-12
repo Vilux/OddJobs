@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSecurityAssignment.Data;
+using WebSecurityAssignment.Repositories;
+using WebSecurityAssignment.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,21 +16,22 @@ namespace WebSecurityAssignment.APIs.JobFeedAPI
     {
  
         private readonly ApplicationDbContext Dbcontext;
+        
 
-        public JobFeedAPIController(ApplicationDbContext context) {
-        Dbcontext = context;
+        public JobFeedAPIController(ApplicationDbContext context)
+        {
+            Dbcontext = context;
         }
-
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<Job> GetAll()
+        public IEnumerable<JobVM> GetAll()
         {
-            //return new string[] { "value1", "value2" };
-            return Dbcontext.Jobs.ToList();
+            JobRepo jobRepo = new JobRepo(Dbcontext);
+            return jobRepo.GetAllJobs();
         }
 
-        
+
         [HttpGet("{id}", Name = "GetJobs")]
         public IActionResult GetById(int id) {
             var item = Dbcontext.Jobs.FirstOrDefault(t => t.jobID == id);
