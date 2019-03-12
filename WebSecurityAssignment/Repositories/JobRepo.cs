@@ -29,7 +29,7 @@ namespace WebSecurityAssignment.Repositories
                 var employee = _context.Users.Find(item.employeeID);
                 var employer = _context.Users.Find(item.employerID);
 
-                //will implement try catch - AJ
+                
 
                 if(employee==null)
                 {
@@ -74,7 +74,7 @@ namespace WebSecurityAssignment.Repositories
                 var employee = _context.Users.Find(item.employeeID);
                 var employer = _context.Users.Find(item.employerID);
 
-                //will implement try catch - AJ
+                
 
                 if (employee == null)
                 {

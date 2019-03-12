@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -70,10 +71,16 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Applications/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID");
+            List<string> applicantID = new List<string>();
+            applicantID.Add(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            List<string> jobID = new List<string>();
+            jobID.Add(id.ToString());
+
+            ViewData["ApplicantID"] = new SelectList(applicantID);
+            ViewData["JobID"] = new SelectList(jobID);
             return View();
         }
 
@@ -84,10 +91,13 @@ namespace WebSecurityAssignment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ApplicantID,JobID,Comment")] Application application)
         {
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+
             if (ModelState.IsValid)
             {
-                _context.Add(application);
-                await _context.SaveChangesAsync();
+                //_context.Add(application);
+                //await _context.SaveChangesAsync();
+                applicationRepo.CreateApplication(application.ApplicantID,application.JobID);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
