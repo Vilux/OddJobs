@@ -4,35 +4,66 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebSecurityAssignment.Data;
-using WebSecurityAssignment.Repositories;
-using WebSecurityAssignment.ViewModels;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebSecurityAssignment.APIs.JobFeedAPI
 {
     [Route("api/[controller]")]
     public class JobFeedAPIController : Controller
     {
+ 
         private readonly ApplicationDbContext Dbcontext;
+
         public JobFeedAPIController(ApplicationDbContext context) {
         Dbcontext = context;
         }
 
+
+        // GET: api/<controller>
         [HttpGet]
-        [Route("GetAll")]
-        public IEnumerable<JobVM> Get()
+        [Route("Get")]
+        public IEnumerable<Job> Get()
         {
-            JobRepo jobRepo = new JobRepo(Dbcontext);
-            var jobs = jobRepo.GetAllJobs();
-            return jobs.ToList();
+            //return new string[] { "value1", "value2" };
+            return Dbcontext.Jobs.ToList();
+        }
+
+        
+        [HttpGet("{id}", Name = "GetJobs")]
+        public IActionResult GetById(int id) {
+            var item = Dbcontext.Jobs.FirstOrDefault(t => t.jobID == id);
+            if (item == null) {
+                return NotFound();
+            }
+            return new ObjectResult(item);
         }
 
         /*
-      [HttpGet]
-      [Route("Get")]
-      public IEnumerable<Job> Get()
-      {
-          return Dbcontext.Jobs.ToList();
-      }
-      */
+        // GET api/<controller>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
+        }
+        */
+        // POST api/<controller>
+        [HttpPost]
+        public void Post([FromBody]string value)
+        {
+
+        }
+
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
     }
 }
