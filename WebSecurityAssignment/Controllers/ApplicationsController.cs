@@ -31,17 +31,36 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Applications/Details/5
-        public async Task<IActionResult> Details(string id)
+        //public async Task<IActionResult> Details(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var application = await _context.Applications
+        //        .Include(a => a.ApplicationUser)
+        //        .Include(a => a.Job)
+        //        .FirstOrDefaultAsync(m => m.ApplicantID == id);
+        //    if (application == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(application);
+        //}
+
+        public async Task<IActionResult> Detail(string applicantID, int jobID)
         {
-            if (id == null)
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+
+            if (applicantID == null || jobID == 0)
             {
                 return NotFound();
             }
 
-            var application = await _context.Applications
-                .Include(a => a.ApplicationUser)
-                .Include(a => a.Job)
-                .FirstOrDefaultAsync(m => m.ApplicantID == id);
+            var application = applicationRepo.GetApplication(applicantID, jobID);
+
             if (application == null)
             {
                 return NotFound();
@@ -76,21 +95,22 @@ namespace WebSecurityAssignment.Controllers
             return View(application);
         }
 
-        // GET: Applications/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string applicantID, int jobID)
         {
-            if (id == null)
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+
+            if (applicantID == null || jobID == 0)
             {
                 return NotFound();
             }
 
-            var application = await _context.Applications.FindAsync(id);
+            var application = applicationRepo.GetApplication(applicantID, jobID);
+
             if (application == null)
             {
                 return NotFound();
             }
-            ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
-            ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID", application.JobID);
+
             return View(application);
         }
 
@@ -101,34 +121,43 @@ namespace WebSecurityAssignment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("ApplicantID,JobID,Comment")] Application application)
         {
-            if (id != application.ApplicantID)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(application);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ApplicationExists(application.ApplicantID, application.JobID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+                applicationRepo.UpdateApplication(application);
             }
-            ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
-            ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID", application.JobID);
-            return View(application);
+
+            ViewBag.Error = "An error occurred while updating this application. Please try again.";
+            return RedirectToAction(nameof(Index));
+
+            //if (id != application.ApplicantID)
+            //{
+            //    return NotFound();
+            //}
+
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _context.Update(application);
+            //        await _context.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!ApplicationExists(application.ApplicantID, application.JobID))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
+            //ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID", application.JobID);
+            //return View(application);
         }
 
         // GET: Applications/Delete
