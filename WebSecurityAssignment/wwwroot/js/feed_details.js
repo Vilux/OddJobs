@@ -1,6 +1,11 @@
 ﻿$(document).ready(function () {
 
+    var jobID = 0;
+
     $("tr").click(function () {
+
+        jobID = this.id;
+
         title = document.getElementById(this.id).getElementsByClassName("job_title")[0].innerHTML;
         title = title.trim();
 
@@ -79,6 +84,10 @@
                     map: map,
                     title: 'Job Location'
                 });
-        });  
+            });
     });
+    $(".apply_button").click(function () {
+        window.location.href = '/Applications/Create/' + jobID;
+    });
+
 });
