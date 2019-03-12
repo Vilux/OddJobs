@@ -22,8 +22,7 @@ namespace WebSecurityAssignment.APIs.JobFeedAPI
 
         // GET: api/<controller>
         [HttpGet]
-        [Route("Get")]
-        public IEnumerable<Job> Get()
+        public IEnumerable<Job> GetAll()
         {
             //return new string[] { "value1", "value2" };
             return Dbcontext.Jobs.ToList();

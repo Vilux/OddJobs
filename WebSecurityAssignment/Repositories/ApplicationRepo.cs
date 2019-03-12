@@ -84,5 +84,16 @@ namespace WebSecurityAssignment.Repositories
             _context.SaveChanges();
             return true;
         }
+
+        public bool CreateApplication(string applicantID, int jobID)
+        {
+            var application = new Application();
+            application.JobID = jobID;
+            application.ApplicantID = applicantID;
+
+            _context.Add(application);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

@@ -91,10 +91,13 @@ namespace WebSecurityAssignment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ApplicantID,JobID,Comment")] Application application)
         {
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+
             if (ModelState.IsValid)
             {
-                _context.Add(application);
-                await _context.SaveChangesAsync();
+                //_context.Add(application);
+                //await _context.SaveChangesAsync();
+                applicationRepo.CreateApplication(application.ApplicantID,application.JobID);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
