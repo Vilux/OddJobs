@@ -22,6 +22,7 @@ namespace WebSecurityAssignment.APIs.JobFeedAPI
 
         // GET: api/<controller>
         [HttpGet]
+        [Route("Get")]
         public IEnumerable<Job> Get()
         {
             //return new string[] { "value1", "value2" };
