@@ -67,12 +67,9 @@
                 @Html.DisplayFor(modelItem => item.comments)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { applicantID = item.ApplicantID, jobID = item.JobID }) |
-                @*<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |*@
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                @*@Html.ActionLink("Edit", "Edit", new { applicantID = item.ApplicantID, jobID = item.JobID }) |*@
+                @Html.ActionLink("Details", "Detail", new { applicantID = item.ApplicantID, jobID = item.JobID }) |   
                 @Html.ActionLink("Delete", "Delete", new { applicantID = item.ApplicantID, jobID = item.JobID })
-
-
             </td>
         </tr>
 }
