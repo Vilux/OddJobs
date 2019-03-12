@@ -76,21 +76,22 @@ namespace WebSecurityAssignment.Controllers
             return View(application);
         }
 
-        // GET: Applications/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(string applicantID, int jobID)
         {
-            if (id == null)
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+
+            if (applicantID == null || jobID == 0)
             {
                 return NotFound();
             }
 
-            var application = await _context.Applications.FindAsync(id);
+            var application = applicationRepo.GetApplication(applicantID, jobID);
+
             if (application == null)
             {
                 return NotFound();
             }
-            ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
-            ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID", application.JobID);
+
             return View(application);
         }
 
