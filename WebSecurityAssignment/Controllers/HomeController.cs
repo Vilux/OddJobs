@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,8 @@ namespace WebSecurityAssignment.Controllers
 
         public IActionResult Index()
 		{
-            var applicationDbContext = db.Jobs.Include(j => j.Address).Include(j => j.ApplicationUser);       
+            var applicationDbContext = db.Jobs.Include(j => j.Address).Include(j => j.ApplicationUser);
+            ViewBag.UserID =  this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             return View(applicationDbContext.ToList());
         }
