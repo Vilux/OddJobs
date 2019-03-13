@@ -1,7 +1,8 @@
 $(document).ready(function () {
-    $.getJSON('http://localhost:49503/api/jobfeedapi',
+    $.getJSON('http://oddjobs.azurewebsites.net/api/jobfeedapi',
         function (data) {
             var items = data;
+            console.log(items);
             var ul = document.createElement('ul');
 
             for (i = 0; i < items.length; i++) {
