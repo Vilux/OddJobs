@@ -43,6 +43,36 @@ namespace WebSecurityAssignment.Repositories
             return applicationList;
         }
 
+        public List<ApplicationVM> GetAllApplications(string currentUserID, int jobID)
+        {
+            var applications = _context.Applications.Where(a => a.JobID == jobID);
+
+
+            List<ApplicationVM> applicationList = new List<ApplicationVM>();
+
+            foreach (var item in applications)
+            {
+                var employee = _context.Users.Find(item.ApplicantID);
+                var job = _context.Jobs.Find(item.JobID);
+                var employer = _context.Users.Find(job.employerID);
+
+                if (employer.Id == currentUserID) {
+                    applicationList.Add(new ApplicationVM()
+                    {
+                        EmployeeFN = employee.FirstName,
+                        EmployeeLN = employee.LastName,
+                        EmployerFN = employer.FirstName,
+                        EmployerLN = employer.LastName,
+                        JobTitle = job.title,
+                        JobID = job.jobID,
+                        ApplicantID = employee.Id,
+                        comments = item.Comment
+                    });
+                }
+            }
+            return applicationList;
+        }
+
         public ApplicationVM GetApplication(string applicantID, int jobID)
         {
             var application = _context.Applications.Where(a => a.ApplicantID == applicantID && a.JobID == jobID).FirstOrDefault();

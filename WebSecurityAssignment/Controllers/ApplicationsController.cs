@@ -23,10 +23,21 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Applications
+        [HttpGet("Applications/")]
         public async Task<IActionResult> Index()
         {
             ApplicationRepo applicationRepo = new ApplicationRepo(_context);
             var applications = applicationRepo.GetAllApplications();
+
+            return View(applications);
+        }
+
+        [HttpGet("Applications/Get/{jobID}")]
+        public async Task<IActionResult> Index(int jobID)
+        {
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+            string applicantID = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var applications = applicationRepo.GetAllApplications(applicantID, jobID);
 
             return View(applications);
         }

@@ -90,6 +90,7 @@
                                 @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
                             </td>
                             <td>
+                                <a asp-controller="Applications" asp-action="Get" asp-route-id="@item.jobID">Pending Applications</a>
                                 <a asp-action="Edit" asp-route-id="@item.jobID">Edit</a> |
                                 <a asp-action="Details" asp-route-id="@item.jobID">Details</a> |
                                 <a asp-action="Delete" asp-route-id="@item.jobID">Delete</a>
