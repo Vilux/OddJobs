@@ -54,22 +54,23 @@ $(document).ready(function () {
 
         var details_amount = document.getElementById("details_amount");
         details_amount.innerHTML = "";
-        var amount_node = document.createTextNode(amount);
+
+        var amount_node = document.createTextNode("Pay: " + amount);
         details_amount.appendChild(amount_node);
 
         var details_dateNeeded = document.getElementById("details_dateNeeded");
         details_dateNeeded.innerHTML = "";
-        var dateNeeded_node = document.createTextNode(dateNeeded);
+        var dateNeeded_node = document.createTextNode("Available: " + dateNeeded);
         details_dateNeeded.appendChild(dateNeeded_node);
 
         var details_employer = document.getElementById("details_employer");
         details_employer.innerHTML = "";
-        var employer_node = document.createTextNode(employer);
+        var employer_node = document.createTextNode("Employer: " + employer);
         details_employer.appendChild(employer_node);
 
         var details_dateExpired = document.getElementById("details_dateExpired");
         details_dateExpired.innerHTML = "";
-        var dateExpired_node = document.createTextNode(dateExpired);
+        var dateExpired_node = document.createTextNode("Expires: " + dateExpired);
         details_dateExpired.appendChild(dateExpired_node);
 
         var details_address = document.getElementById("details_address");

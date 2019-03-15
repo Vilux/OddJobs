@@ -49,7 +49,9 @@ namespace WebSecurityAssignment.Data
                         ConcurrencyStamp = "99e5d2b6-cd1c-48fa-ab83-654ff84466e0",
                         LockoutEnabled = true,
                         FirstName = "Rick",
-                        LastName = "Harrison"
+                        LastName = "Harrison",
+                        EmailConfirmed = true
+
                     },
 
                      new ApplicationUser{ Id = "3",
@@ -62,7 +64,8 @@ namespace WebSecurityAssignment.Data
                         ConcurrencyStamp = "eb3e0151-4293-4792-b48a-b4b79e71599a",
                         LockoutEnabled = true,
                         FirstName = "Jennine",
-                        LastName = "Speaker"
+                        LastName = "Speaker",
+                        EmailConfirmed = true
                     },
 
                      new ApplicationUser{ Id = "4",
@@ -75,7 +78,8 @@ namespace WebSecurityAssignment.Data
                         ConcurrencyStamp = "59b8a048-8d9a-4d81-a564-7a3aba376ebe",
                         LockoutEnabled = true,
                         FirstName = "Ashley",
-                        LastName = "Sudderth"
+                        LastName = "Sudderth",
+                        EmailConfirmed = true
                     },
 
                      new ApplicationUser{ Id = "5",
@@ -88,7 +92,8 @@ namespace WebSecurityAssignment.Data
                         ConcurrencyStamp = "22dc6fc9-5596-40d8-97e6-26c51a5aa0f6",
                         LockoutEnabled = true,
                         FirstName = "Carly",
-                        LastName = "Bossi"
+                        LastName = "Bossi",
+                        EmailConfirmed = true
                     },
 
 
