@@ -7,16 +7,13 @@ using WebSecurityAssignment.Data;
 using WebSecurityAssignment.Repositories;
 using WebSecurityAssignment.ViewModels;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebSecurityAssignment.APIs.JobFeedAPI
 {
     [Route("api/[controller]")]
     public class JobFeedAPIController : Controller
     {
- 
         private readonly ApplicationDbContext Dbcontext;
-        
 
         public JobFeedAPIController(ApplicationDbContext context)
         {
@@ -31,7 +28,7 @@ namespace WebSecurityAssignment.APIs.JobFeedAPI
             return jobRepo.GetAllJobs();
         }
 
-
+        /*
         [HttpGet("{id}", Name = "GetJobs")]
         public IActionResult GetById(int id) {
             var item = Dbcontext.Jobs.FirstOrDefault(t => t.jobID == id);
@@ -40,28 +37,9 @@ namespace WebSecurityAssignment.APIs.JobFeedAPI
             }
             return new ObjectResult(item);
         }
-
-        /*
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
         */
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
 
-        }
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
+       
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
