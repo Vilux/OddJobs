@@ -1,14 +1,13 @@
-﻿@model IEnumerable<WebSecurityAssignment.Data.Job>
+﻿@model IEnumerable<WebSecurityAssignment.ViewModels.JobVM>
 
 @{
     ViewData["Title"] = "Index";
-    int JobID = 0;
+    //int JobID = 0;
 }
 <div>
     <section class="job_feed">
         <div id="feed_list">
             <h2>Job Listings</h2>
-
             <p>
                 <a asp-action="Create">Create New</a>
             </p>
@@ -16,13 +15,13 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.title)
-                        </th>                    
-                        <th >
-                            @Html.DisplayNameFor(model => model.employerID)
+                            @Html.DisplayNameFor(model => model.Title)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.amount)
+                            @Html.DisplayNameFor(model => model.EmployerName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Amount)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.dateNeeded)
@@ -39,15 +38,15 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr id="@Html.DisplayFor(modelItem => item.jobID)">
+                        <tr id="@Html.DisplayFor(modelItem => item.ID)">
                             <td class="job_title">
-                                @Html.DisplayFor(modelItem => item.title)
+                                @Html.DisplayFor(modelItem => item.Title)
                             </td>
                             <td class="job_employer">
-                                @Html.DisplayFor(modelItem => item.employerID)
+                                @Html.DisplayFor(modelItem => item.EmployerName)
                             </td>
                             <td class="job_amount">
-                                @Html.DisplayFor(modelItem => item.amount)
+                                @Html.DisplayFor(modelItem => item.Amount)
                             </td>
                             <td class="job_dateNeeded">
                                 @Html.DisplayFor(modelItem => item.dateNeeded)
@@ -56,31 +55,30 @@
                                 @Html.DisplayFor(modelItem => item.dateExpired)
                             </td>
                             <td class="job_address">
-                                @Html.DisplayFor(modelItem => item.Address.streetAddress) @Html.DisplayFor(modelItem => item.Address.city), @Html.DisplayFor(modelItem => item.Address.province)
+                                @Html.DisplayFor(modelItem => item.Address)
                             </td>
                             <td class="job_description" style="display:none;">
-                                @Html.DisplayFor(modelItem => item.description)
+                                @Html.DisplayFor(modelItem => item.Description)
                             </td>
                         </tr>
-                     
+
                     }
+
                 </tbody>
             </table>
         </div>
         <div id="feed_details">
 
             <section id="details">
-                <h3 id="details_title">Mow my lawn</h3>
+                <h3 id="details_title"></h3>
                 <p id="details_description">
-                    Need my lawn mowed since I hurt my back and cant push the mower anymore.
-                    Should take no longer than afew hours
                 </p>
-                <p id="details_dateNeeded">Start Date: Anytime </p>
-                <p id="details_dateExpired">Complete by: Febuary 30th 2019</p>
+                <p id="details_dateNeeded"></p>
+                <p id="details_dateExpired"></p>
                 <p id="details_amount"></p>
-                <p>Location: <a id="details_address">1234 Jeggins Ave. Cooltown</a></p>
-                <p>Posted by: <a id="details_employer">biglawnbrian</a></p>
-                
+                <p><a id="details_address"></a></p>
+                <p>Posted by: <a id="details_employer"></a></p>
+
 
 
                 <section id="map_container">
@@ -91,7 +89,7 @@
                         var map;
                         function initMap() {
                             map = new google.maps.Map(document.getElementById('map'), {
-                                center: { lat: -34.397, lng: 150.644 },
+                                center: { lat: 49.246, lng: -123.116 },
                                 zoom: 8
                             });
                         }
