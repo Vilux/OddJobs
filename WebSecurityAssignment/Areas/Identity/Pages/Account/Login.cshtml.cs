@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using WebSecurityAssignment.Data;
+using Microsoft.Extensions.Configuration;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 
 namespace WebSecurityAssignment.Areas.Identity.Pages.Account
 {
@@ -18,11 +20,13 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        IConfiguration _configuration;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [BindProperty]
@@ -63,9 +67,12 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
+            ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
+
             ReturnUrl = returnUrl;
         }
 
+        [ValidateRecaptcha]
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             System.Threading.Thread.Sleep(2000);
@@ -74,6 +81,7 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
@@ -96,7 +104,7 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
-            }
+            }           
 
             // If we got this far, something failed, redisplay form
             return Page();
