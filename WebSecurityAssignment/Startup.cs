@@ -49,7 +49,10 @@ namespace WebSecurityAssignment
             services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlite("Data Source=.\\wwwroot\\sql.db"));
 
-			services.AddIdentity<ApplicationUser, IdentityRole>()
+			services.AddIdentity<ApplicationUser, IdentityRole>(config => 
+            {
+                config.SignIn.RequireConfirmedEmail = true;
+            })
 			 .AddEntityFrameworkStores<ApplicationDbContext>()
 			 .AddDefaultUI().AddDefaultTokenProviders();
 
