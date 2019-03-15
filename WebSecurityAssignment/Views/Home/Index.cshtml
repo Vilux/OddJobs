@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Index";
     //int JobID = 0;
+
+
 }
 <div>
     <section class="job_feed">
@@ -16,19 +18,19 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Title)
+                            Job Title
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.EmployerName)
+                            Employer Name
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Amount)
+                            Pay Amount
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.dateNeeded)
+                            Job Available
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.dateExpired)
+                            Job Expires
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.Address)
@@ -47,13 +49,23 @@
                                 @Html.DisplayFor(modelItem => item.EmployerName)
                             </td>
                             <td class="job_amount">
-                                @Html.DisplayFor(modelItem => item.Amount)
+                                $@Html.DisplayFor(modelItem => item.Amount)
                             </td>
                             <td class="job_dateNeeded">
-                                @Html.DisplayFor(modelItem => item.dateNeeded)
+                                @Html.DisplayFor(modelItem => item.dateNeeded.DayOfWeek)
+
+                                @{
+                                    string monthDayNeeded = item.dateNeeded.Date.ToString("MMMM dd");
+                                } 
+                                @Html.DisplayFor(modelItem => monthDayNeeded)
                             </td>
                             <td class="job_dateExpired">
-                                @Html.DisplayFor(modelItem => item.dateExpired)
+                                @Html.DisplayFor(modelItem => item.dateExpired.DayOfWeek)
+
+                                @{
+                                    string monthDayExpired = item.dateExpired.Date.ToString("MMMM dd");
+                                }
+                                @Html.DisplayFor(modelItem => monthDayExpired)
                             </td>
                             <td class="job_address">
                                 @Html.DisplayFor(modelItem => item.Address)
@@ -78,7 +90,7 @@
                 <p id="details_dateExpired"></p>
                 <p id="details_amount"></p>
                 <p><a id="details_address"></a></p>
-                <p>Posted by: <a id="details_employer"></a></p>
+                <p><a id="details_employer"></a></p>
 
 
 
