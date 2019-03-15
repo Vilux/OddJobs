@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using WebSecurityAssignment.Services;
 
 namespace WebSecurityAssignment
 {
@@ -34,7 +36,17 @@ namespace WebSecurityAssignment
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
 
-			services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddTransient<IEmailSender, EmailSender>(i => new EmailSender(
+                Configuration["EmailSender:Host"],
+                Configuration.GetValue<int>("EmailSender:Port"),
+                Configuration.GetValue<bool>("EmailSender:EnableSSL"),
+                Configuration["EmailSender:UserName"],
+                Configuration["EmailSender:Password"]
+    )
+);
+
+
+            services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlite("Data Source=.\\wwwroot\\sql.db"));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>()
