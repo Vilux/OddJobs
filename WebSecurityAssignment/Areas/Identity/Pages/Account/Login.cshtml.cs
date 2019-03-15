@@ -20,13 +20,11 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        IConfiguration _configuration;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, IConfiguration configuration)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
-            _logger = logger;
-            _configuration = configuration;
+            _logger = logger;           
         }
 
         [BindProperty]
@@ -67,7 +65,6 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
 
             ReturnUrl = returnUrl;
         }
@@ -81,7 +78,6 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
