@@ -13,6 +13,8 @@ using WebSecurityAssignment.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PaulMiami.AspNetCore.Mvc.Recaptcha;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using WebSecurityAssignment.Services;
 
 namespace WebSecurityAssignment
 {
@@ -47,6 +49,15 @@ namespace WebSecurityAssignment
 				options.CheckConsentNeeded = context => true;
 				options.MinimumSameSitePolicy = SameSiteMode.None;
 			});
+
+            services.AddTransient<IEmailSender, EmailSender>(i => new EmailSender(
+                Configuration["EmailSender:Host"],
+                Configuration.GetValue<int>("EmailSender:Port"),
+                Configuration.GetValue<bool>("EmailSender:EnableSSL"),
+                Configuration["EmailSender:UserName"],
+                Configuration["EmailSender:Password"]
+    )
+);
 
             services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlite("Data Source=.\\wwwroot\\sql.db"));
