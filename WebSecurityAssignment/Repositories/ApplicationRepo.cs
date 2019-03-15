@@ -107,7 +107,6 @@ namespace WebSecurityAssignment.Repositories
             return true;
         }
 
-
         public bool UpdateApplication(Application application)
         {
             _context.Update(application);
