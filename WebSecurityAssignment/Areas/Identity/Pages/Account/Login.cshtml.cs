@@ -81,6 +81,7 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
@@ -103,10 +104,7 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
-            }
-
-            // Reset the site key if there is an error.
-            ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
+            }           
 
             // If we got this far, something failed, redisplay form
             return Page();
