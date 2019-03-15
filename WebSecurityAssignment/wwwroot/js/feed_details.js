@@ -1,10 +1,24 @@
-﻿$(document).ready(function () {
+﻿function selectCurrent(id) {
+    let items = document.getElementsByTagName("tr");
+
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].id == id) {
+            items[i].classList.add('selected_job');
+        } else {
+            items[i].classList.remove('selected_job');
+        }        
+    }
+}
+
+$(document).ready(function () {
 
     var jobID = 0;
 
     $("tr").click(function () {
 
         jobID = this.id;
+
+        selectCurrent(jobID)
 
         title = document.getElementById(this.id).getElementsByClassName("job_title")[0].innerHTML;
         title = title.trim();
