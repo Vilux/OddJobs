@@ -68,7 +68,7 @@
                         @Html.DisplayFor(modelItem => item.comments)
                     </td>
                     <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { applicantID = item.ApplicantID, jobID = item.JobID }) |*@
+                        @Html.ActionLink("Accept", "Accept", "Applications" , new { jobId = item.JobID, acceptedApplicantId = item.ApplicantID }) |
                         @Html.ActionLink("Details", "Detail", new { applicantID = item.ApplicantID, jobID = item.JobID }) |
                         @Html.ActionLink("Delete", "Delete", new { applicantID = item.ApplicantID, jobID = item.JobID })
                     </td>
