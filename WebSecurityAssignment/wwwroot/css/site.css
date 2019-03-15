@@ -94,3 +94,7 @@ tr:hover {
     background-color: #d1d1d1; 
     cursor: pointer;
 }
+
+.selected_job {
+    background-color: #d1d1d1;
+}

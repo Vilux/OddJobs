@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using WebSecurityAssignment.Services;
 
@@ -19,12 +20,25 @@ namespace WebSecurityAssignment
 {
 	public class Startup
 	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json",
+                            optional: false,
+                            reloadOnChange: true)
+            .AddEnvironmentVariables();
 
-		public IConfiguration Configuration { get; }
+            // Use the Secret Manager during development.
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+            Configuration = builder.Build();
+        }
+
+
+        public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
@@ -45,7 +59,6 @@ namespace WebSecurityAssignment
     )
 );
 
-
             services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlite("Data Source=.\\wwwroot\\sql.db"));
 
@@ -56,8 +69,13 @@ namespace WebSecurityAssignment
 			 .AddEntityFrameworkStores<ApplicationDbContext>()
 			 .AddDefaultUI().AddDefaultTokenProviders();
 
+            services.AddRecaptcha(new RecaptchaOptions
+            {
+                SiteKey = Configuration["Recaptcha:SiteKey"],
+                SecretKey = Configuration["Recaptcha:SecretKey"]
+            });
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
