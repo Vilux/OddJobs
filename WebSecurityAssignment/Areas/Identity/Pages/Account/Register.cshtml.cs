@@ -8,7 +8,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PaulMiami.AspNetCore.Mvc.Recaptcha;
 using WebSecurityAssignment.Data;
 
 namespace WebSecurityAssignment.Areas.Identity.Pages.Account
@@ -20,17 +22,20 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        IConfiguration _configuration;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _configuration = configuration;
         }
 
         [BindProperty]
@@ -67,9 +72,11 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
 
         public void OnGet(string returnUrl = null)
         {
+            ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
             ReturnUrl = returnUrl;
         }
 
+        [ValidateRecaptcha]
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             System.Threading.Thread.Sleep(2000);
@@ -101,6 +108,9 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
+
+            // Reset the site key if there is an error.
+            ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
 
             // If we got this far, something failed, redisplay form
             return Page();
