@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
 using WebSecurityAssignment.Models;
+using WebSecurityAssignment.Repositories;
 
 namespace WebSecurityAssignment.Controllers
 {
@@ -23,10 +24,13 @@ namespace WebSecurityAssignment.Controllers
 
         public IActionResult Index()
 		{
-            var applicationDbContext = db.Jobs.Include(j => j.Address).Include(j => j.ApplicationUser);
-            ViewBag.UserID =  this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            JobRepo jobRepo = new JobRepo(db);
+            var jobs = jobRepo.GetAllJobs();
+            return View(jobs);
 
-            return View(applicationDbContext.ToList());
+            // var applicationDbContext = db.Jobs.Include(j => j.Address).Include(j => j.ApplicationUser);
+            // ViewBag.UserID =  this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //return View(applicationDbContext.ToList());
         }
 
 		public IActionResult About()

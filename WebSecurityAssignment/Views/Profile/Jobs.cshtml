@@ -12,14 +12,14 @@
     <div class="row">
         <div class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
-                <li><a href="/Profile/Jobs">Jobs</a></li>
-                <li><a href="/Profile"
+                <li><a href="/Profile/Jobs"
                        style="
-                            background-color: rgb(51, 122, 183);
-                            border-radius: 4px;
-                            box-sizing: border-box;
-                            color: rgb(255, 255, 255);
-                            ">Listings</a></li>
+                        background-color: rgb(51, 122, 183);
+                        border-radius: 4px;
+                        box-sizing: border-box;
+                        color: rgb(255, 255, 255);
+                       ">Jobs</a></li>
+                <li><a href="/Profile">Listings</a></li>
                 <li><a href="/Identity/Account/Manage">Profile</a></li>
                 <li><a id="change-password" asp-page="/Identity/Account/Manage/ChangePassword">Password</a></li>
 
@@ -90,7 +90,6 @@
                                 @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
                             </td>
                             <td>
-                                <a asp-controller="Applications" asp-action="Get" asp-route-id="@item.jobID">Pending Applications</a>
                                 <a asp-action="Edit" asp-route-id="@item.jobID">Edit</a> |
                                 <a asp-action="Details" asp-route-id="@item.jobID">Details</a> |
                                 <a asp-action="Delete" asp-route-id="@item.jobID">Delete</a>
@@ -102,7 +101,3 @@
         </div>
     </div>
 </div>
-
-
-
-
