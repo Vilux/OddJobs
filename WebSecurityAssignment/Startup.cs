@@ -75,6 +75,18 @@ namespace WebSecurityAssignment
                 SecretKey = Configuration["Recaptcha:SecretKey"]
             });
 
+            services.Configure<IdentityOptions>(options => {
+                //// Password settings if you want to ensure password strength.               
+
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.MaxFailedAccessAttempts = 5; // Lock after 5 consec failed logins
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 		}
 

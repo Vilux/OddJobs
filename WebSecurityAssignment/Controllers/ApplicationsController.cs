@@ -135,6 +135,31 @@ namespace WebSecurityAssignment.Controllers
             return View(application);
         }
 
+        [HttpGet]
+//        [ValidateAntiForgeryToken]    
+        public IActionResult Accept(int jobId, string acceptedApplicantId) {
+            if (ModelState.IsValid)
+            {
+                string currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                JobRepo jobRepo = new JobRepo(_context);
+                
+                var job = jobRepo.GetJob(jobId);
+                if (currentUserId == job.employerID) {
+                    jobRepo.AcceptApplcation(jobId, acceptedApplicantId);
+                }
+                return RedirectToAction("Details/" + job.jobID, "Jobs", null);
+            }
+            else
+            {
+                ViewBag.Error = "An error occurred while updating this application. Please try again.";
+                return RedirectToAction(nameof(Index));
+            }
+            
+
+            
+        }
+
         // POST: Applications/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

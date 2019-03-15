@@ -20,13 +20,11 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        IConfiguration _configuration;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, IConfiguration configuration)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
-            _logger = logger;
-            _configuration = configuration;
+            _logger = logger;           
         }
 
         [BindProperty]
@@ -67,7 +65,6 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
 
             ReturnUrl = returnUrl;
         }
@@ -103,10 +100,7 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
-            }
-
-            // Reset the site key if there is an error.
-            ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
+            }           
 
             // If we got this far, something failed, redisplay form
             return Page();

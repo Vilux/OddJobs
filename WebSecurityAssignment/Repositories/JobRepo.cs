@@ -148,5 +148,16 @@ namespace WebSecurityAssignment.Repositories
             _context.SaveChanges();
             return true;
         }
+
+        public bool AcceptApplcation(int jobID, string applicantId) {
+
+            var job = _context.Jobs.Where(j => j.jobID == jobID).FirstOrDefault();
+
+            job.employeeID = applicantId;
+
+            _context.Update(job);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }
