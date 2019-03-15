@@ -84,6 +84,8 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
+                ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
+
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FirstName = Input.FirstName, LastName = Input.LastName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
@@ -100,17 +102,14 @@ namespace WebSecurityAssignment.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }
-
-            // Reset the site key if there is an error.
-            ViewData["SiteKey"] = _configuration["Recaptcha:SiteKey"];
+            }      
 
             // If we got this far, something failed, redisplay form
             return Page();
