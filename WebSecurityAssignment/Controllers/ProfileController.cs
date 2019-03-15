@@ -21,12 +21,21 @@ namespace WebSecurityAssignment.Controllers
             jobRepo = new JobRepo(_context);
         }
 
-
+        //Listings view
         public IActionResult Index()
         {
             var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var listings = _context.Jobs.Where(j => j.employerID == id);           
+
+            return View(listings.ToList());
+        }
+
+        public IActionResult Jobs()
+        {
+            var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var listings = _context.Jobs.Where(j => j.employeeID == id);
 
             return View(listings.ToList());
         }
