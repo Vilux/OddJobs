@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebSecurityAssignment.Data.Job>
+﻿@model IEnumerable<WebSecurityAssignment.ViewModels.JobVM>
 
 @{
     Layout = "/Areas/Identity/Pages/_Layout.cshtml";
@@ -24,42 +24,34 @@
                 </li>
                 <li><a href="/Profile">Listings</a></li>
                 <li><a href="/Identity/Account/Manage">Profile</a></li>
-                <li><a id="change-password" asp-page="/Identity/Account/Manage/ChangePassword">Password</a></li>
+                <li><a href="/Identity/Account/Manage/ChangePassword">Password</a></li>
 
-                <li><a href="/Identity/Account/Manage/TwoFactorAuthentication">Two-factor authentication</a></li>
-                <li><a href="/Identity/Account/Manage/PersonalData">Personal data</a></li>
             </ul>
         </div>
         <div class="col-md-9">
-            <p>
-                <a asp-controller="Jobs" asp-action="Create">Create New</a>
-            </p>
             <table class="table">
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.title)
+                            Job Title
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.description)
+                            Job Description
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.employeeID)
+                            Employee
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.amount)
+                            Amount
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.dateNeeded)
+                            Job Date
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.dateExpired)
+                            Available Until
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Address)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.ApplicationUser)
+                            Address
                         </th>
                         <th></th>
                     </tr>
@@ -69,16 +61,16 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.title)
+                                @Html.DisplayFor(modelItem => item.Title)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.description)
+                                @Html.DisplayFor(modelItem => item.Description)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.employeeID)
+                                @Html.DisplayFor(modelItem => item.EmployeeName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.amount)
+                                @Html.DisplayFor(modelItem => item.Amount)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.dateNeeded)
@@ -87,15 +79,12 @@
                                 @Html.DisplayFor(modelItem => item.dateExpired)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Address.addressID)
-                            </td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>                           
                             <td>
-                                @Html.DisplayFor(modelItem => item.ApplicationUser.Id)
-                            </td>
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.jobID">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.jobID">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.jobID">Delete</a>
+                                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                             </td>
                         </tr>
                     }

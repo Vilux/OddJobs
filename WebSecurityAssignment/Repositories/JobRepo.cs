@@ -80,12 +80,14 @@ namespace WebSecurityAssignment.Repositories
                 if (employee == null)
                 {
                     employee = new ApplicationUser();
+                    employee.Id = null;
 
                 }
 
                 if (employer == null)
                 {
-                    employee = new ApplicationUser();
+                    employer = new ApplicationUser();
+                    employer.Id = null;
 
                 }
 
@@ -99,7 +101,56 @@ namespace WebSecurityAssignment.Repositories
                     Amount = item.amount,
                     dateNeeded = item.dateNeeded,
                     dateExpired = item.dateExpired,
-                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode)
+                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode),
+                    employeeID = employee.Id
+                });
+            }
+
+            return jobList;
+        }
+
+        //Stephen: added this for the jobs page on users profile
+        public List<JobVM> GetAllJobsByEmployee(string id)
+
+        {
+            var jobs = _context.Jobs.Where(j => j.employeeID == id);
+
+            List<JobVM> jobList = new List<JobVM>();
+
+            foreach (var item in jobs)
+            {
+                var completeAddress = _context.Addresses.Find(item.addressID);
+                var employee = _context.Users.Find(item.employeeID);
+                var employer = _context.Users.Find(item.employerID);
+
+
+
+                if (employee == null)
+                {
+                    employee = new ApplicationUser();
+                    employee.Id = null;
+
+                }
+
+                if (employer == null)
+                {
+                    employer = new ApplicationUser();
+                    employer.Id = null;
+
+                }
+
+                jobList.Add(new JobVM()
+                {
+                    ID = item.jobID,
+                    Title = item.title,
+                    Description = item.description,
+                    EmployeeName = (employee.FirstName + " " + employee.LastName),
+                    EmployerName = (employer.FirstName + " " + employer.LastName),
+                    Amount = item.amount,
+                    dateNeeded = item.dateNeeded,
+                    dateExpired = item.dateExpired,
+                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode),
+                    employeeID = employee.Id
                 });
             }
 
@@ -120,7 +171,8 @@ namespace WebSecurityAssignment.Repositories
                     amount = job.amount,
                     dateNeeded = job.dateNeeded,
                     dateExpired = job.dateExpired,
-                    addressID = job.addressID };
+                    addressID = job.addressID
+                };
             }
             return null;
         }

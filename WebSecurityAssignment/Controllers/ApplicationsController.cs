@@ -121,7 +121,7 @@ namespace WebSecurityAssignment.Controllers
             {
                 //_context.Add(application);
                 //await _context.SaveChangesAsync();
-                applicationRepo.CreateApplication(application.ApplicantID,application.JobID);
+                applicationRepo.CreateApplication(application.ApplicantID,application.JobID,application.Comment);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
