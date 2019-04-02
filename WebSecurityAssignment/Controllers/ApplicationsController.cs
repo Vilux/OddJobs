@@ -84,6 +84,13 @@ namespace WebSecurityAssignment.Controllers
         // GET: Applications/Create
         public IActionResult Create(int id)
         {
+            JobRepo jobRepo = new JobRepo(_context);
+            var job = jobRepo.GetJob(id);
+            var employee = _context.Users.Find(job.employeeID);
+            var employer = _context.Users.Find(job.employerID);
+            var address = _context.Addresses.Find(job.addressID);
+
+
             List<string> applicantID = new List<string>();
             applicantID.Add(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
 
@@ -92,6 +99,12 @@ namespace WebSecurityAssignment.Controllers
 
             ViewData["ApplicantID"] = new SelectList(applicantID);
             ViewData["JobID"] = new SelectList(jobID);
+            ViewData["Title"] = job.title;
+            ViewData["Employer"] = employer.FirstName + " " + employer.LastName;
+            ViewData["JobDetail"] = job.description;
+            ViewData["Address"] = (address.streetAddress + " " + address.city + " " + address.province + " " + address.postalCode);
+
+
             return View();
         }
 
@@ -176,6 +189,7 @@ namespace WebSecurityAssignment.Controllers
             ViewBag.Error = "An error occurred while updating this application. Please try again.";
             return RedirectToAction(nameof(Index));
 
+            //who the f left all this here?
             //if (id != application.ApplicantID)
             //{
             //    return NotFound();

@@ -39,5 +39,16 @@ namespace WebSecurityAssignment.Controllers
 
             return View(listings.ToList());
         }
+
+        public IActionResult Applications()
+        {
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+
+            var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var applications = applicationRepo.GetAllApplications(id);
+
+            return View(applications.ToList());
+        }
     }
 }
