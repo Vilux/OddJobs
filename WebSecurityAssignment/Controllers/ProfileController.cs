@@ -26,7 +26,9 @@ namespace WebSecurityAssignment.Controllers
         {
             var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var listings = _context.Jobs.Where(j => j.employerID == id);           
+            JobRepo jobRepo = new JobRepo(_context);
+
+            var listings = jobRepo.GetAllJobsByEmployer(id);           
 
             return View(listings.ToList());
         }
@@ -35,7 +37,9 @@ namespace WebSecurityAssignment.Controllers
         {
             var id = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var listings = _context.Jobs.Where(j => j.employeeID == id);
+            JobRepo jobRepo = new JobRepo(_context);
+
+            var listings = jobRepo.GetAllJobsByEmployee(id);
 
             return View(listings.ToList());
         }
