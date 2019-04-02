@@ -1,0 +1,82 @@
+﻿
+@model IEnumerable<WebSecurityAssignment.ViewModels.ApplicationVM>
+
+@{
+    Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+}
+
+<h2>Manage your account</h2>
+
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <a href="/Profile/Applications" 
+                            style="
+                            background-color: rgb(51, 122, 183);
+                            border-radius: 4px;
+                            box-sizing: border-box;
+                            color: rgb(255, 255, 255);
+                            ">Applications</a>
+                </li>
+                <li><a href="/Profile/Jobs">Jobs</a></li>
+                <li><a href="/Profile">Listings</a></li>
+                <li><a href="/Identity/Account/Manage">Profile</a></li>
+                <li><a id="change-password" asp-page="/Identity/Account/Manage/ChangePassword">Password</a></li>
+
+                <li><a href="/Identity/Account/Manage/TwoFactorAuthentication">Two-factor authentication</a></li>
+                <li><a href="/Identity/Account/Manage/PersonalData">Personal data</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <p>
+                <a asp-controller="Jobs" asp-action="Create">Create New</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmployerFN)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EmployerLN)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.JobTitle)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.comments)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployerFN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EmployerLN)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JobTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.comments)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Delete", "Delete", new { applicantID = item.ApplicantID, jobID = item.JobID })
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
