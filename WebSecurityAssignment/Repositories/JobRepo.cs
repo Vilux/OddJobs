@@ -53,7 +53,8 @@ namespace WebSecurityAssignment.Repositories
                     Amount = item.amount,
                     dateNeeded = item.dateNeeded,
                     dateExpired = item.dateExpired,
-                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode)
+                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode),
+                    employeeID = item.employeeID
                 });
             }
 
@@ -157,6 +158,18 @@ namespace WebSecurityAssignment.Repositories
 
             _context.Update(job);
             _context.SaveChanges();
+
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+
+            foreach (Application application in _context.Applications)
+            {
+                if (application.JobID == jobID) {
+                    applicationRepo.DeleteApplication(application.ApplicantID, application.JobID);
+                }
+            }
+
+            _context.SaveChanges();
+
             return true;
         }
     }
