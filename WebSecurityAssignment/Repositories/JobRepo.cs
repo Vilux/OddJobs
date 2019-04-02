@@ -53,7 +53,8 @@ namespace WebSecurityAssignment.Repositories
                     Amount = item.amount,
                     dateNeeded = item.dateNeeded,
                     dateExpired = item.dateExpired,
-                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode)
+                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode),
+                    employeeID = item.employeeID
                 });
             }
 

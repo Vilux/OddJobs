@@ -16,5 +16,7 @@ namespace WebSecurityAssignment.ViewModels
         public string Address { get; set; }
         public DateTime dateNeeded { get; set; }
         public DateTime dateExpired { get; set; }
+
+        public string employeeID { get; set; }
     }
 }

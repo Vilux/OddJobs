@@ -176,6 +176,7 @@ namespace WebSecurityAssignment.Controllers
             ViewBag.Error = "An error occurred while updating this application. Please try again.";
             return RedirectToAction(nameof(Index));
 
+            //who the f left all this here?
             //if (id != application.ApplicantID)
             //{
             //    return NotFound();
