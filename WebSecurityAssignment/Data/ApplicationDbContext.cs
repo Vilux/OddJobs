@@ -152,5 +152,7 @@ namespace WebSecurityAssignment.Data
         }
 
         public DbSet<WebSecurityAssignment.ViewModels.ApplicationVM> ApplicationVM { get; set; }
+
+        public DbSet<WebSecurityAssignment.ViewModels.RoleVM> RoleVM { get; set; }
     }
 }
