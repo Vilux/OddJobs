@@ -55,6 +55,28 @@ namespace WebSecurityAssignment.Controllers
             List<DateTime> date = new List<DateTime>();
             date.Add(DateTime.Now);
             ViewData["date"] = new SelectList(date);
+
+            var transactions = _context.Transactions;
+
+            if (ModelState.IsValid)
+            {
+                TransactionRepo transactionRepo = new TransactionRepo(_context);
+                Transaction transaction = new Transaction() {
+                    employeeID = job.employeeID,
+                    jobID = job.jobID,
+                    paymentToEmployee = job.amount * 0.85f,
+                    paymentToProvider = job.amount * 0.15f,
+                    date = DateTime.Now
+                };
+                var success = transactionRepo.CreateTransaction(transaction.transactionID, transaction.employeeID, transaction.jobID, transaction.paymentToEmployee, transaction.paymentToProvider,
+                    transaction.date);
+
+                if (success)
+                {
+                    return View(transaction);
+                }
+            }
+            ViewBag.Error = "An error occurred while creating this role. Please try again.";
             return View();
         }
 
@@ -65,21 +87,7 @@ namespace WebSecurityAssignment.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Transaction transaction, int id)
         {
-            var transactions = _context.Transactions;
-
-            if (ModelState.IsValid)
-            {
-                TransactionRepo transactionRepo = new TransactionRepo(_context);                
-
-                var success = transactionRepo.CreateTransaction(transaction.transactionID, transaction.employeeID, transaction.jobID, transaction.paymentToEmployee, transaction.paymentToProvider, 
-                    transaction.date);
-
-                if (success)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-            }
-            ViewBag.Error = "An error occurred while creating this role. Please try again.";
+            
             return View();
         }
 
