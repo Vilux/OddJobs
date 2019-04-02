@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebSecurityAssignment</title>
+    <title>@ViewData["Title"] - Odd Job</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
@@ -29,33 +29,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">WebSecurityAssignment</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand"><strong>Odd Job</strong></a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Jobs" asp-action="Index">Jobs</a></li>
-                    <li><a asp-area="" asp-controller="Addresses" asp-action="Index">Addresses</a></li>
-                    <li><a asp-area="" asp-controller="Applications" asp-action="Index">Applications</a></li>
+                    
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin Tools<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a asp-area="" asp-controller="Role" asp-action="Index">Roles</a></li>
+                                <li><a asp-area="" asp-controller="UserRole" asp-action="Index">User-Roles</a></li>
+                                <li><a asp-area="" asp-controller="Jobs" asp-action="Index">Jobs</a></li>
+                                <li><a asp-area="" asp-controller="Applications" asp-action="Index">Applications</a></li>
+                                <li><a asp-area="" asp-controller="Addresses" asp-action="Index">Addresses</a></li>
+                            </ul>
+                        </li>
+                    }
+
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Job-Feed</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="API">API</a></li>
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <li>
-                            <a asp-area="" asp-controller="Role" asp-action="Index">
-                                Roles
-                            </a>
-                        </li>
-                    }
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <li>
-                            <a asp-area="" asp-controller="UserRole" asp-action="Index">
-                                User-Roles
-                            </a>
-                        </li>
-                    }
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+
+
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
