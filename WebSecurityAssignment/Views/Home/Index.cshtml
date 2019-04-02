@@ -41,6 +41,8 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
+                        @if (item.employeeID == null)
+                        { 
                         <tr id="@Html.DisplayFor(modelItem => item.ID)">
                             <td class="job_title">
                                 @Html.DisplayFor(modelItem => item.Title)
@@ -74,7 +76,7 @@
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
                         </tr>
-
+                        }
                     }
 
                 </tbody>

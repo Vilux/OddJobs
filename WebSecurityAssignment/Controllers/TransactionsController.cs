@@ -27,7 +27,7 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Transactions/Details/5
-        public IActionResult Details(int transactionID)
+        public IActionResult Details(int transactionID, int jobID)
         {
             TransactionRepo transactionRepo = new TransactionRepo(_context);
             Transaction transaction = transactionRepo.GetTransaction(transactionID);
@@ -50,11 +50,14 @@ namespace WebSecurityAssignment.Controllers
         public ActionResult Create(Transaction transaction)
         {
             var transactions = _context.Transactions;
+
             if (ModelState.IsValid)
             {
                 TransactionRepo transactionRepo = new TransactionRepo(_context);
                 var success = transactionRepo.CreateTransaction(transaction.transactionID, transaction.employeeID, transaction.jobID, transaction.paymentToEmployee, transaction.paymentToProvider, 
                     transaction.date);
+                ViewData["jobID"] = new SelectList(_context.Transactions, "jobID", "jobID");
+                ViewData["employeeID"] = new SelectList(_context.Transactions, "employeeID", "employeeID");
                 if (success)
                 {
                     return RedirectToAction(nameof(Index));
