@@ -94,5 +94,13 @@ namespace WebSecurityAssignment.Repositories
             _context.SaveChanges();
             return true;
         }
+
+        public bool CreateAddress(Address address) {
+            var addresses = _context.Addresses;
+            addresses.Add(address);
+
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

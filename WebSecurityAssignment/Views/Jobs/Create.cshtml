@@ -1,4 +1,4 @@
-﻿@model WebSecurityAssignment.Data.Job
+﻿@model WebSecurityAssignment.ViewModels.JobCreateVM
 
 @{
     ViewData["Title"] = "Create";
@@ -13,28 +13,19 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="title" class="control-label"></label>
-                <input asp-for="title" class="form-control" />
-                <span asp-validation-for="title" class="text-danger"></span>
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="description" class="control-label"></label>
-                <input asp-for="description" class="form-control" />
-                <span asp-validation-for="description" class="text-danger"></span>
-            </div>
-            <div class="form-group" style="display:none">
-                <label asp-for="employerID" class="control-label"></label>
-                <select asp-for="employerID" class ="form-control" asp-items="ViewBag.employerID"></select>
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="employeeID" class="control-label"></label>
-                <input asp-for="employeeID" class="form-control" />
-                <span asp-validation-for="employeeID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="amount" class="control-label"></label>
-                <input asp-for="amount" class="form-control" />
-                <span asp-validation-for="amount" class="text-danger"></span>
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="dateNeeded" class="control-label"></label>
@@ -47,8 +38,19 @@
                 <span asp-validation-for="dateExpired" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="addressID" class="control-label"></label>
-                <select asp-for="addressID" class ="form-control" asp-items="ViewBag.addressID"></select>
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Province" class="control-label"></label>
+                <input asp-for="Province" class="form-control" />
+                <span asp-validation-for="Province" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
