@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
 using WebSecurityAssignment.Repositories;
+using WebSecurityAssignment.ViewModels;
 
 namespace WebSecurityAssignment.Controllers
 {
@@ -59,12 +60,55 @@ namespace WebSecurityAssignment.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("jobID,title,description,employerID,employeeID,amount,dateNeeded,dateExpired,addressID")] Job job)
+        public async Task<IActionResult> Create([Bind("Title,Description,Amount,dateNeeded,dateExpired,Address,City,Province")] JobCreateVM jobCreateVM)
         {
             JobRepo jobRepo = new JobRepo(_context);
 
+            Job job = new Job();
+
             if (ModelState.IsValid)
             {
+                int addressId = 0;
+                bool matchedAddress = false;
+
+                foreach (Address address in _context.Addresses)
+                {
+                    if (address.streetAddress == jobCreateVM.Address &&
+                        address.city == jobCreateVM.City &&
+                        address.province == jobCreateVM.Province)
+                    {
+                        addressId = address.addressID;
+                        matchedAddress = true;
+                    }
+                }
+                if (!matchedAddress)
+                {
+                    AddressesRepo addressesRepo = new AddressesRepo(_context);
+                    Address address = new Address()
+                    {
+                        streetAddress = jobCreateVM.Address,
+                        city = jobCreateVM.City,
+                        province = jobCreateVM.Province,
+                        postalCode = ""
+                    };
+                    addressesRepo.CreateAddress(address);
+                    addressId = address.addressID;
+                }
+
+
+                job = new Job()
+                {
+                    title = jobCreateVM.Title,
+                    description = jobCreateVM.Description,
+                    employerID = this.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                    employeeID = "",
+                    amount = jobCreateVM.Amount,
+                    dateNeeded = jobCreateVM.dateNeeded,
+                    dateExpired = jobCreateVM.dateExpired,
+                    addressID = addressId
+
+                };
+
                 jobRepo.CreateJob(job);
                 return RedirectToAction(nameof(Index));
             }
