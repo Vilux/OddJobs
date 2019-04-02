@@ -80,12 +80,14 @@ namespace WebSecurityAssignment.Repositories
                 if (employee == null)
                 {
                     employee = new ApplicationUser();
+                    employee.Id = null;
 
                 }
 
                 if (employer == null)
                 {
-                    employee = new ApplicationUser();
+                    employer = new ApplicationUser();
+                    employer.Id = null;
 
                 }
 
@@ -99,7 +101,8 @@ namespace WebSecurityAssignment.Repositories
                     Amount = item.amount,
                     dateNeeded = item.dateNeeded,
                     dateExpired = item.dateExpired,
-                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode)
+                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode),
+                    employeeID = employee.Id
                 });
             }
 
@@ -125,12 +128,14 @@ namespace WebSecurityAssignment.Repositories
                 if (employee == null)
                 {
                     employee = new ApplicationUser();
+                    employee.Id = null;
 
                 }
 
                 if (employer == null)
                 {
-                    employee = new ApplicationUser();
+                    employer = new ApplicationUser();
+                    employer.Id = null;
 
                 }
 
@@ -144,7 +149,8 @@ namespace WebSecurityAssignment.Repositories
                     Amount = item.amount,
                     dateNeeded = item.dateNeeded,
                     dateExpired = item.dateExpired,
-                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode)
+                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode),
+                    employeeID = employee.Id
                 });
             }
 
@@ -165,7 +171,8 @@ namespace WebSecurityAssignment.Repositories
                     amount = job.amount,
                     dateNeeded = job.dateNeeded,
                     dateExpired = job.dateExpired,
-                    addressID = job.addressID };
+                    addressID = job.addressID
+                };
             }
             return null;
         }
