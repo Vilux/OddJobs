@@ -157,6 +157,18 @@ namespace WebSecurityAssignment.Repositories
 
             _context.Update(job);
             _context.SaveChanges();
+
+            ApplicationRepo applicationRepo = new ApplicationRepo(_context);
+
+            foreach (Application application in _context.Applications)
+            {
+                if (application.JobID == jobID) {
+                    applicationRepo.DeleteApplication(application.ApplicantID, application.JobID);
+                }
+            }
+
+            _context.SaveChanges();
+
             return true;
         }
     }
