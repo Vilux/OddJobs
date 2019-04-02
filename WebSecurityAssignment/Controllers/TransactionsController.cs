@@ -35,10 +35,26 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Transactions/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["employeeID"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["jobID"] = new SelectList(_context.Jobs, "jobID", "jobID");
+            List<string> jobID = new List<string>();
+            jobID.Add(id.ToString());
+            ViewData["jobID"] = new SelectList(jobID);
+
+            var job = _context.Jobs.Where(j => j.jobID == id).FirstOrDefault();
+            string employee = job.employeeID;
+            ViewData["employeeID"] = new SelectList(employee);
+
+            List<double> paymentToEmployee = new List<double>();
+            List<double> paymentToEmployeer = new List<double>();
+            paymentToEmployee.Add(job.amount * 0.15);
+            paymentToEmployeer.Add(job.amount * 0.85);
+            ViewData["paymentToEmployee"] = new SelectList(paymentToEmployee);
+            ViewData["paymentToEmployer"] = new SelectList(paymentToEmployeer);
+
+            List<DateTime> date = new List<DateTime>();
+            date.Add(DateTime.Now);
+            ViewData["date"] = new SelectList(date);
             return View();
         }
 
@@ -47,17 +63,17 @@ namespace WebSecurityAssignment.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Transaction transaction)
+        public ActionResult Create(Transaction transaction, int id)
         {
             var transactions = _context.Transactions;
 
             if (ModelState.IsValid)
             {
-                TransactionRepo transactionRepo = new TransactionRepo(_context);
+                TransactionRepo transactionRepo = new TransactionRepo(_context);                
+
                 var success = transactionRepo.CreateTransaction(transaction.transactionID, transaction.employeeID, transaction.jobID, transaction.paymentToEmployee, transaction.paymentToProvider, 
                     transaction.date);
-                ViewData["jobID"] = new SelectList(_context.Transactions, "jobID", "jobID");
-                ViewData["employeeID"] = new SelectList(_context.Transactions, "employeeID", "employeeID");
+
                 if (success)
                 {
                     return RedirectToAction(nameof(Index));
