@@ -101,7 +101,7 @@ namespace WebSecurityAssignment.Controllers
                     title = jobCreateVM.Title,
                     description = jobCreateVM.Description,
                     employerID = this.User.FindFirstValue(ClaimTypes.NameIdentifier),
-                    employeeID = "",
+                    employeeID = null,
                     amount = jobCreateVM.Amount,
                     dateNeeded = jobCreateVM.dateNeeded,
                     dateExpired = jobCreateVM.dateExpired,
