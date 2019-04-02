@@ -30,23 +30,18 @@
             </ul>
         </div>
         <div class="col-md-9">
-            <p>
-                <a asp-controller="Jobs" asp-action="Create">Create New</a>
-            </p>
             <table class="table">
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.EmployerFN)
+                            Employer
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.EmployerLN)
-                        </th>
+                        
                         <th>
                             @Html.DisplayNameFor(model => model.JobTitle)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.comments)
+                            Comments
                         </th>
                         <th></th>
                     </tr>
@@ -56,10 +51,7 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => item.EmployerFN)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.EmployerLN)
+                                @Html.DisplayFor(modelItem => item.EmployerFN) @Html.DisplayFor(modelItem => item.EmployerLN)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.JobTitle)

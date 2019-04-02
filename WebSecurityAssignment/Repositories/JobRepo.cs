@@ -106,6 +106,51 @@ namespace WebSecurityAssignment.Repositories
             return jobList;
         }
 
+        //Stephen: added this for the jobs page on users profile
+        public List<JobVM> GetAllJobsByEmployee(string id)
+
+        {
+            var jobs = _context.Jobs.Where(j => j.employeeID == id);
+
+            List<JobVM> jobList = new List<JobVM>();
+
+            foreach (var item in jobs)
+            {
+                var completeAddress = _context.Addresses.Find(item.addressID);
+                var employee = _context.Users.Find(item.employeeID);
+                var employer = _context.Users.Find(item.employerID);
+
+
+
+                if (employee == null)
+                {
+                    employee = new ApplicationUser();
+
+                }
+
+                if (employer == null)
+                {
+                    employee = new ApplicationUser();
+
+                }
+
+                jobList.Add(new JobVM()
+                {
+                    ID = item.jobID,
+                    Title = item.title,
+                    Description = item.description,
+                    EmployeeName = (employee.FirstName + " " + employee.LastName),
+                    EmployerName = (employer.FirstName + " " + employer.LastName),
+                    Amount = item.amount,
+                    dateNeeded = item.dateNeeded,
+                    dateExpired = item.dateExpired,
+                    Address = (completeAddress.streetAddress + " " + completeAddress.city + " " + completeAddress.province + " " + completeAddress.postalCode)
+                });
+            }
+
+            return jobList;
+        }
+
         public Job GetJob(int jobID)
         {
             var job = _context.Jobs.Where(j => j.jobID == jobID).FirstOrDefault();
