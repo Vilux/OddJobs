@@ -68,7 +68,7 @@
                     //after success
                     success: function (msg) {
                         window.location.href
-                        ="/Transactions/FinishShopping?transactionID=" + data.paymentID + "?jobID=" + @ViewBag.jobID;
+                        ="/Transactions/FinishShopping?transactionID=" + data.paymentID + "&jobID=" + @ViewBag.jobID;
                     },
                     //after fail
                     error: function (msg) {
