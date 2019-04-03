@@ -86,26 +86,36 @@ namespace WebSecurityAssignment.Controllers
         {
             JobRepo jobRepo = new JobRepo(_context);
             var job = jobRepo.GetJob(id);
-            var employee = _context.Users.Find(job.employeeID);
-            var employer = _context.Users.Find(job.employerID);
-            var address = _context.Addresses.Find(job.addressID);
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (_context.Applications.Where(a => a.JobID == job.jobID && a.ApplicantID == currentUser).FirstOrDefault() == null)
+            {
+                var employee = _context.Users.Find(job.employeeID);
+                var employer = _context.Users.Find(job.employerID);
+                var address = _context.Addresses.Find(job.addressID);
 
 
-            List<string> applicantID = new List<string>();
-            applicantID.Add(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+                List<string> applicantID = new List<string>();
+                applicantID.Add(currentUser);
 
-            List<string> jobID = new List<string>();
-            jobID.Add(id.ToString());
+                List<string> jobID = new List<string>();
+                jobID.Add(id.ToString());
 
-            ViewData["ApplicantID"] = new SelectList(applicantID);
-            ViewData["JobID"] = new SelectList(jobID);
-            ViewData["Title"] = job.title;
-            ViewData["Employer"] = employer.FirstName + " " + employer.LastName;
-            ViewData["JobDetail"] = job.description;
-            ViewData["Address"] = (address.streetAddress + " " + address.city + " " + address.province + " " + address.postalCode);
+                ViewData["ApplicantID"] = new SelectList(applicantID);
+                ViewData["JobID"] = new SelectList(jobID);
+                ViewData["Title"] = job.title;
+                ViewData["Employer"] = employer.FirstName + " " + employer.LastName;
+                ViewData["JobDetail"] = job.description;
+                ViewData["Address"] = (address.streetAddress + " " + address.city + " " + address.province + " " + address.postalCode);
 
 
-            return View();
+                return View();
+            }
+            else
+            {
+                TempData["alreadyAppliedMessage"] = "You have already applied for this job.";
+                return RedirectToAction(nameof(Index), "", new { areas = "" });
+            }
         }
 
         // POST: Applications/Create
