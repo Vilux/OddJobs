@@ -113,7 +113,7 @@ namespace WebSecurityAssignment.Controllers
             }
             else
             {
-                TempData["alreadyAppliedMessage"] = "You have already applied for this job.";
+                TempData["applicationMessage"] = "You have already applied for this job.";
                 return RedirectToAction(nameof(Index), "", new { areas = "" });
             }
         }
@@ -132,7 +132,11 @@ namespace WebSecurityAssignment.Controllers
                 //_context.Add(application);
                 //await _context.SaveChangesAsync();
                 applicationRepo.CreateApplication(application.ApplicantID,application.JobID,application.Comment);
-                return RedirectToAction(nameof(Index));
+
+                var job = _context.Jobs.Where(j => j.jobID == application.JobID).FirstOrDefault();
+
+                TempData["applicationMessage"] = "You have succesfully applied for this job:\\n" + job.title;
+                return RedirectToAction(nameof(Index), "", new { areas = "" });
             }
             ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
             ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID", application.JobID);
