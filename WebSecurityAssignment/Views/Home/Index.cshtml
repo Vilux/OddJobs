@@ -6,6 +6,11 @@
 
 
 }
+
+@if (ViewBag.message != null) {
+    <script>alert(`@ViewBag.message`)</script>
+}
+
 <div>
     <section class="job_feed">
         <div id="feed_list">
@@ -94,14 +99,14 @@
                 <p><a id="details_address"></a></p>
                 <p><a id="details_employer"></a></p>
 
+
+
                 <section id="map_container">
                     <span class="metadata-marker" style="display: none;" data-region_tag="html-body"></span>
                     <div id="map"></div>
                     <script>
                         //<span class="metadata-marker" style="display: none;" data-region_tag="script-body"></span>
                         var map;
-
-
                         function initMap() {
                             map = new google.maps.Map(document.getElementById('map'), {
                                 center: { lat: 49.246, lng: -123.116 },
@@ -116,7 +121,5 @@
             </section>
             <button class="apply_button">Apply</button>
         </div>
-
     </section>
-  
 </div>
