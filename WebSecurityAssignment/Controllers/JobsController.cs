@@ -52,7 +52,11 @@ namespace WebSecurityAssignment.Controllers
 
             ViewData["addressID"] = new SelectList(_context.Addresses, "addressID", "addressID");
             ViewData["employerID"] = new SelectList(id);
-            return View();
+            JobCreateVM jobCreateVM = new JobCreateVM();
+
+            jobCreateVM.dateNeeded = DateTime.Now;
+            jobCreateVM.dateExpired = DateTime.Now.AddDays(30);
+            return View(jobCreateVM);
         }
 
         // POST: Jobs/Create
