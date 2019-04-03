@@ -15,11 +15,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="employeeID" class="control-label"></label>
-                <select asp-for="employeeID" class ="form-control" asp-items="ViewBag.employeeID"></select>
+                <select asp-for="employeeID" class="form-control" asp-items="ViewBag.employeeID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="jobID" class="control-label"></label>
-                <select asp-for="jobID" class ="form-control" asp-items="ViewBag.jobID"></select>
+                <select asp-for="jobID" class="form-control" asp-items="ViewBag.jobID"></select>
             </div>
             <div class="form-group">
                 <label asp-for="paymentToEmployee" class="control-label"></label>
@@ -30,7 +30,7 @@
                 <select asp-for="paymentToProvider" class="form-control" asp-items="ViewBag.paymentToEmployer"></select>
             </div>
             <div class="form-group">
-                <label asp-for="date" class="control-label"></label>               
+                <label asp-for="date" class="control-label"></label>
                 <select asp-for="jobID" class="form-control" asp-items="ViewBag.date"></select>
             </div>
             <div class="form-group">
@@ -39,6 +39,102 @@
         </form>
     </div>
 </div>
+
+<div id="paypal-button"></div>
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<script>
+    paypal.Button.render({
+        env: 'sandbox', // Or ' production '
+        style: { // You can customize your button here.
+            size: 'small',
+            color: 'gold',
+            shape: 'pill',
+            label: 'checkout'
+        },
+        client: {
+            // You need to change this to your client ID
+            sandbox: 'AY2woQDVEPWCFxTeV0aF6Sw8xiqwXTToZ9Mj7DrXy_nR0WU4hqeA7EVXmbpTHwIDsBK_YWPoJi_Njqsb',
+
+        },
+
+        commit: true, // Show a 'Pay Now' button
+
+        payment: function (data, actions) {
+            return actions.payment.create({
+                payment: {
+                    transactions: [{
+                        // The 'custom' field helps you to link the paypal request
+                        // with paypal's response which is important.
+
+                        // You may want use a 'custom' field to send an accountID from
+                        // your site so you can uniquely identify the person making the
+                        // payment when Paypal notifies you.
+
+                        // Sometimes a person at your site will pay at Paypal with
+                        // an entirely different set of credentials. They may pay with
+                        // a credit card or account which belongs to their spouse or
+                        // another family member. In situations like these, relating
+                        // payments to accounts on your site can be difficult.
+
+                        // The custom property value that you send to Paypal for a
+                        // payment request is returned in Paypal's reponse.
+                        custom: 'Custom data goes here!',
+                        amount: { total: @ViewBag.payment, currency: 'USD' }
+                    }
+                    ]
+                }
+            });
+        },
+
+        onAuthorize: function (data, actions) {
+            return actions.payment.execute().then(function (payment) {
+                console.log("This is what comes back from Paypal: ")
+                console.log(payment);
+                alert("This JSON is from Paypal: " + JSON.stringify(payment));
+                console.log("-------------------------------------")
+                var dataObject = {
+                    "cart":             payment.cart,
+                    "intent":           payment.intent,
+                    "paymentID":        payment.id,
+                    "create_time":      payment.create_time,
+                    "paymentState":     payment.state,
+                    "payerEmail":       payment.payer.payer_info.email,
+                    "payerID":          payment.payer.payer_info.payer_id,
+                    "payerFirstName":   payment.payer.payer_info.first_name,
+                    "payerLastName":    payment.payer.payer_info.last_name,
+                    "payerMiddleName":  payment.payer.payer_info.middle_name,
+                    "payerCountryCode": payment.payer.payer_info.country_code,
+                    "paymentMethod":    payment.payer.payment_method,
+                    "payerStatus":      payment.payer.status,
+                    "amount":           payment.transactions[0].amount.total,
+                    "currency":         payment.transactions[0].amount.currency,
+                    "custom":           payment.transactions[0].custom
+                }
+
+                // The payment is complete!
+                // You can now show a confirmation message to the customer
+                $.ajax({                
+                    //after success
+                    success: function (msg) {
+                        window.location.href
+                        ="/Home/FinishShopping?transactionID=" + data.paymentID;
+                    },
+                    //after fail
+                    error: function (msg) {
+                        alert("fail: " + JSON.stringify(msg));
+                    }
+                });
+            })
+        },
+
+        onCancel: function (data, actions) {
+            /*
+            * Buyer cancelled the payment
+            */
+        },
+    }, '#paypal-button');
+</script>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

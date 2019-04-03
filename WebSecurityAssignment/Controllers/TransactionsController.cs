@@ -46,11 +46,14 @@ namespace WebSecurityAssignment.Controllers
             ViewData["employeeID"] = new SelectList(employee);
 
             List<double> paymentToEmployee = new List<double>();
-            List<double> paymentToEmployeer = new List<double>();
+            List<double> paymentToEmployer = new List<double>();
+            List<double> payment = new List<double>();
             paymentToEmployee.Add(job.amount * 0.15);
-            paymentToEmployeer.Add(job.amount * 0.85);
+            paymentToEmployer.Add(job.amount * 0.85);
+            payment.Add(job.amount);
             ViewData["paymentToEmployee"] = new SelectList(paymentToEmployee);
-            ViewData["paymentToEmployer"] = new SelectList(paymentToEmployeer);
+            ViewData["paymentToEmployer"] = new SelectList(paymentToEmployer);
+            ViewData["payment"] = new SelectList(payment);
 
             List<DateTime> date = new List<DateTime>();
             date.Add(DateTime.Now);
@@ -68,10 +71,18 @@ namespace WebSecurityAssignment.Controllers
                     paymentToProvider = job.amount * 0.15f,
                     date = DateTime.Now
                 };
-                var success = transactionRepo.CreateTransaction(transaction.transactionID, transaction.employeeID, transaction.jobID, transaction.paymentToEmployee, transaction.paymentToProvider,
-                    transaction.date);
 
-                if (success)
+                try
+                {
+                    var success = transactionRepo.CreateTransaction(transaction.transactionID, transaction.employeeID, transaction.jobID, transaction.paymentToEmployee, transaction.paymentToProvider,
+                        transaction.date);
+
+                    if (success)
+                    {
+                        return View(transaction);
+                    }
+                }
+                catch
                 {
                     return View(transaction);
                 }
@@ -89,6 +100,12 @@ namespace WebSecurityAssignment.Controllers
         {
             
             return View();
+        }
+
+        public IActionResult FinishShopping(int transactionID)
+        {
+            Transaction transaction = _context.Transactions.Where(t => t.transactionID == transactionID).FirstOrDefault();
+            return View(transaction);
         }
 
         private bool TransactionExists(int id)
