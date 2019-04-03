@@ -78,8 +78,7 @@
 
                         // The custom property value that you send to Paypal for a
                         // payment request is returned in Paypal's reponse.
-                        custom: 'Custom data goes here!',
-                        amount: { total: @ViewBag.payment, currency: 'USD' }
+                        amount: { total: @ViewBag.amount, currency: 'USD' }
                     }
                     ]
                 }
@@ -90,27 +89,9 @@
             return actions.payment.execute().then(function (payment) {
                 console.log("This is what comes back from Paypal: ")
                 console.log(payment);
-                alert("This JSON is from Paypal: " + JSON.stringify(payment));
-                console.log("-------------------------------------")
-                var dataObject = {
-                    "cart":             payment.cart,
-                    "intent":           payment.intent,
-                    "paymentID":        payment.id,
-                    "create_time":      payment.create_time,
-                    "paymentState":     payment.state,
-                    "payerEmail":       payment.payer.payer_info.email,
-                    "payerID":          payment.payer.payer_info.payer_id,
-                    "payerFirstName":   payment.payer.payer_info.first_name,
-                    "payerLastName":    payment.payer.payer_info.last_name,
-                    "payerMiddleName":  payment.payer.payer_info.middle_name,
-                    "payerCountryCode": payment.payer.payer_info.country_code,
-                    "paymentMethod":    payment.payer.payment_method,
-                    "payerStatus":      payment.payer.status,
-                    "amount":           payment.transactions[0].amount.total,
-                    "currency":         payment.transactions[0].amount.currency,
-                    "custom":           payment.transactions[0].custom
-                }
-
+                //alert("This JSON is from Paypal: " + JSON.stringify(payment));
+                //console.log("-------------------------------------")
+                
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
                 $.ajax({                
