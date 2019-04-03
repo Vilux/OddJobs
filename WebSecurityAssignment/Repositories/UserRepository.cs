@@ -31,6 +31,16 @@ namespace WebSecurityAssignment.Repositories
 			return users;
 		}
 
+        public UserVM GetUser(string email)
+        {
+            var user = _context.Users.Where(u => u.Email == email).FirstOrDefault();
+            if (user != null)
+            {
+                return new UserVM() { Email = user.Email };
+            }
+            return null;
+        }
+
         public bool Remove(string email)
         {
             var user = _context.Users.Where(u => u.Email.Equals(email, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
