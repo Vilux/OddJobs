@@ -37,9 +37,7 @@ namespace WebSecurityAssignment.Controllers
         // GET: Transactions/Create
         public IActionResult Create(int id)
         {
-            List<string> jobID = new List<string>();
-            jobID.Add(id.ToString());
-            ViewData["jobID"] = new SelectList(jobID);
+            ViewData["jobID"] = id;
 
             var job = _context.Jobs.Where(j => j.jobID == id).FirstOrDefault();
             string employee = job.employeeID;
@@ -92,9 +90,19 @@ namespace WebSecurityAssignment.Controllers
             return View();
         }
 
-        public IActionResult FinishShopping(int transactionID)
+        public IActionResult FinishShopping(int transactionID, int jobID)
         {
             Transaction transaction = _context.Transactions.Where(t => t.transactionID == transactionID).FirstOrDefault();
+
+            foreach (Job job in _context.Jobs)
+            {
+                if (job.jobID == jobID)
+                {
+                    _context.Jobs.Remove(job);
+                }
+            }
+
+            _context.SaveChanges();
             return View(transaction);
         }
 
