@@ -1,4 +1,5 @@
 ﻿function selectCurrent(id) {
+    
     let items = document.getElementsByTagName("tr");
 
     for (let i = 0; i < items.length; i++) {
@@ -8,15 +9,19 @@
             items[i].classList.remove('selected_job');
         }        
     }
+
 }
 
 $(document).ready(function () {
 
-    selectCurrent(1);
+    var array = document.getElementsByTagName("tr");
+    var id = array[1].id
+    selectCurrent(id)
+
     var jobID = 0;
 
     $("tr").click(function () {
-
+        
         jobID = this.id;
 
         selectCurrent(jobID)

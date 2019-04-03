@@ -87,7 +87,6 @@ namespace WebSecurityAssignment.Controllers
             JobRepo jobRepo = new JobRepo(_context);
             var job = jobRepo.GetJob(id);
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            //HomeController homeController = new HomeController(_context);
 
             if (_context.Applications.Where(a => a.JobID == job.jobID && a.ApplicantID == currentUser).FirstOrDefault() == null)
             {
@@ -109,13 +108,12 @@ namespace WebSecurityAssignment.Controllers
                 ViewData["JobDetail"] = job.description;
                 ViewData["Address"] = (address.streetAddress + " " + address.city + " " + address.province + " " + address.postalCode);
 
-                
+
                 return View();
-             
             }
             else
             {
-                TempData["alreadyAppliedMessage"] = "You have already applied for this job.";
+                TempData["applicationMessage"] = "You have already applied for this job.";
                 return RedirectToAction(nameof(Index), "", new { areas = "" });
             }
         }
@@ -134,8 +132,11 @@ namespace WebSecurityAssignment.Controllers
                 //_context.Add(application);
                 //await _context.SaveChangesAsync();
                 applicationRepo.CreateApplication(application.ApplicantID,application.JobID,application.Comment);
-                TempData["appliedMessage"] = "You have successfully applied to this job.";
-                RedirectToAction(nameof(Index), "", new { areas = "" });
+
+                var job = _context.Jobs.Where(j => j.jobID == application.JobID).FirstOrDefault();
+
+                TempData["applicationMessage"] = "You have succesfully applied for this job:\\n" + job.title;
+                return RedirectToAction(nameof(Index), "", new { areas = "" });
             }
             ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
             ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID", application.JobID);

@@ -27,9 +27,9 @@ namespace WebSecurityAssignment.Controllers
             JobRepo jobRepo = new JobRepo(db);
             var jobs = jobRepo.GetAllJobs();        
 
-            if (TempData["alreadyAppliedMessage"] != null)
+            if (TempData["applicationMessage"] != null)
             {
-                ViewBag.message = TempData["alreadyAppliedMessage"];
+                ViewBag.message = TempData["applicationMessage"];
             }
 
             if (TempData["appliedMessage"] != null)
