@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebSecurityAssignment.Migrations
 {
-    public partial class initialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,6 +21,26 @@ namespace WebSecurityAssignment.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Addresses", x => x.addressID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ApplicationVM",
+                columns: table => new
+                {
+                    ID = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    EmployerFN = table.Column<string>(nullable: true),
+                    EmployerLN = table.Column<string>(nullable: true),
+                    EmployeeFN = table.Column<string>(nullable: true),
+                    EmployeeLN = table.Column<string>(nullable: true),
+                    JobTitle = table.Column<string>(nullable: true),
+                    ApplicantID = table.Column<string>(nullable: true),
+                    JobID = table.Column<int>(nullable: false),
+                    comments = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApplicationVM", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,6 +83,18 @@ namespace WebSecurityAssignment.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleVM",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    RoleName = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleVM", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,7 +241,8 @@ namespace WebSecurityAssignment.Migrations
                 {
                     employeeID = table.Column<string>(nullable: false),
                     jobID = table.Column<int>(nullable: false),
-                    score = table.Column<float>(nullable: false)
+                    score = table.Column<float>(nullable: false),
+                    review = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -257,7 +290,12 @@ namespace WebSecurityAssignment.Migrations
                     jobID = table.Column<int>(nullable: false),
                     paymentToEmployee = table.Column<float>(nullable: false),
                     paymentToProvider = table.Column<float>(nullable: false),
-                    date = table.Column<DateTime>(nullable: false)
+                    date = table.Column<DateTime>(nullable: false),
+                    amount = table.Column<string>(nullable: true),
+                    currency = table.Column<string>(nullable: true),
+                    intent = table.Column<string>(nullable: true),
+                    paymentMethod = table.Column<string>(nullable: true),
+                    paymentState = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -346,6 +384,9 @@ namespace WebSecurityAssignment.Migrations
                 name: "Applications");
 
             migrationBuilder.DropTable(
+                name: "ApplicationVM");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -362,6 +403,9 @@ namespace WebSecurityAssignment.Migrations
 
             migrationBuilder.DropTable(
                 name: "Ratings");
+
+            migrationBuilder.DropTable(
+                name: "RoleVM");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
