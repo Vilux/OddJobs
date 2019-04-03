@@ -60,7 +60,7 @@
                                 @Html.DisplayFor(modelItem => item.comments)
                             </td>
                             <td>
-                                @Html.ActionLink("Delete", "Delete", new { applicantID = item.ApplicantID, jobID = item.JobID })
+                                @Html.ActionLink("Delete", "Delete", "Applications", new { applicantID = item.ApplicantID, jobID = item.JobID }, null)
                             </td>
                         </tr>
                     }

@@ -20,7 +20,7 @@ $(document).ready(function () {
 
     setDetails(id);
 
-    var jobID = 0;
+    var jobID = id;
 
     $("tr").click(function () {
 
