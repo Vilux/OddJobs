@@ -48,7 +48,7 @@
 
                         // The custom property value that you send to Paypal for a
                         // payment request is returned in Paypal's reponse.
-                        amount: { total: @ViewBag.amount, currency: 'USD' }
+                        amount: { total: @ViewBag.amount, currency: 'USD' },
                     }
                     ]
                 }
@@ -68,7 +68,7 @@
                     //after success
                     success: function (msg) {
                         window.location.href
-                        ="/Transactions/FinishShopping?transactionID=" + data.paymentID;
+                        ="/Transactions/FinishShopping?transactionID=" + data.paymentID + "&jobID=" + @ViewBag.jobID;
                     },
                     //after fail
                     error: function (msg) {
