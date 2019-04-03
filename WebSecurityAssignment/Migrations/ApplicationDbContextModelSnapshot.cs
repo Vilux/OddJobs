@@ -242,11 +242,13 @@ namespace WebSecurityAssignment.Migrations
                     b.ToTable("Jobs");
                 });
 
-            modelBuilder.Entity("WebSecurityAssignment.Data.Rating", b =>
+            modelBuilder.Entity("WebSecurityAssignment.Data.Ratings", b =>
                 {
                     b.Property<string>("employeeID");
 
                     b.Property<int>("jobID");
+
+                    b.Property<string>("review");
 
                     b.Property<float>("score");
 
@@ -260,11 +262,21 @@ namespace WebSecurityAssignment.Migrations
                     b.Property<int>("transactionID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("amount");
+
+                    b.Property<string>("currency");
+
                     b.Property<DateTime>("date");
 
                     b.Property<string>("employeeID");
 
+                    b.Property<string>("intent");
+
                     b.Property<int>("jobID");
+
+                    b.Property<string>("paymentMethod");
+
+                    b.Property<string>("paymentState");
 
                     b.Property<float>("paymentToEmployee");
 
@@ -278,6 +290,45 @@ namespace WebSecurityAssignment.Migrations
                         .IsUnique();
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.ViewModels.ApplicationVM", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicantID");
+
+                    b.Property<string>("EmployeeFN");
+
+                    b.Property<string>("EmployeeLN");
+
+                    b.Property<string>("EmployerFN");
+
+                    b.Property<string>("EmployerLN");
+
+                    b.Property<int>("JobID");
+
+                    b.Property<string>("JobTitle");
+
+                    b.Property<string>("comments");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ApplicationVM");
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.ViewModels.RoleVM", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RoleName")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleVM");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -351,7 +402,7 @@ namespace WebSecurityAssignment.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
                 });
 
-            modelBuilder.Entity("WebSecurityAssignment.Data.Rating", b =>
+            modelBuilder.Entity("WebSecurityAssignment.Data.Ratings", b =>
                 {
                     b.HasOne("WebSecurityAssignment.Data.ApplicationUser", "ApplicationUser")
                         .WithMany("Ratings")

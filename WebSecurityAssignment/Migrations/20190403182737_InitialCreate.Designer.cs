@@ -9,14 +9,14 @@ using WebSecurityAssignment.Data;
 namespace WebSecurityAssignment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190305185619_addedAddress")]
-    partial class addedAddress
+    [Migration("20190403182737_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -165,8 +165,6 @@ namespace WebSecurityAssignment.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("Address");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -266,11 +264,21 @@ namespace WebSecurityAssignment.Migrations
                     b.Property<int>("transactionID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("amount");
+
+                    b.Property<string>("currency");
+
                     b.Property<DateTime>("date");
 
                     b.Property<string>("employeeID");
 
+                    b.Property<string>("intent");
+
                     b.Property<int>("jobID");
+
+                    b.Property<string>("paymentMethod");
+
+                    b.Property<string>("paymentState");
 
                     b.Property<float>("paymentToEmployee");
 
@@ -284,6 +292,45 @@ namespace WebSecurityAssignment.Migrations
                         .IsUnique();
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.ViewModels.ApplicationVM", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicantID");
+
+                    b.Property<string>("EmployeeFN");
+
+                    b.Property<string>("EmployeeLN");
+
+                    b.Property<string>("EmployerFN");
+
+                    b.Property<string>("EmployerLN");
+
+                    b.Property<int>("JobID");
+
+                    b.Property<string>("JobTitle");
+
+                    b.Property<string>("comments");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("ApplicationVM");
+                });
+
+            modelBuilder.Entity("WebSecurityAssignment.ViewModels.RoleVM", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("RoleName")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleVM");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

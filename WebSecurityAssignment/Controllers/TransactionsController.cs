@@ -43,21 +43,11 @@ namespace WebSecurityAssignment.Controllers
 
             var job = _context.Jobs.Where(j => j.jobID == id).FirstOrDefault();
             string employee = job.employeeID;
-            ViewData["employeeID"] = new SelectList(employee);
 
-            List<double> paymentToEmployee = new List<double>();
-            List<double> paymentToEmployer = new List<double>();
-            List<double> payment = new List<double>();
-            paymentToEmployee.Add(job.amount * 0.15);
-            paymentToEmployer.Add(job.amount * 0.85);
-            payment.Add(job.amount);
-            ViewData["paymentToEmployee"] = new SelectList(paymentToEmployee);
-            ViewData["paymentToEmployer"] = new SelectList(paymentToEmployer);
-            ViewData["payment"] = new SelectList(payment);
+            var emp = _context.Users.Where(u => u.Id == employee).FirstOrDefault();
+            ViewBag.name = emp.FirstName + " " + emp.LastName;
 
-            List<DateTime> date = new List<DateTime>();
-            date.Add(DateTime.Now);
-            ViewData["date"] = new SelectList(date);
+            ViewData["amount"] = job.amount;
 
             var transactions = _context.Transactions;
 
