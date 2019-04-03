@@ -32,6 +32,12 @@ namespace WebSecurityAssignment.Controllers
                 ViewBag.message = TempData["alreadyAppliedMessage"];
             }
 
+            if (TempData["appliedMessage"] != null)
+
+            {
+                ViewBag.message = TempData["appliedMessage"];
+            }
+
             return View(jobs);
         }
 
