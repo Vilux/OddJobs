@@ -23,16 +23,14 @@ namespace WebSecurityAssignment.Controllers
         }
 
         public IActionResult Index()
-		{          
-
+		{
             JobRepo jobRepo = new JobRepo(db);
             var jobs = jobRepo.GetAllJobs();
-           
-            if (TempData["AlreadyAppliedMessage"] != null) {
-                ViewBag.message = TempData["AlreadyAppliedMessage"];
-            }
-
             return View(jobs);
+
+            // var applicationDbContext = db.Jobs.Include(j => j.Address).Include(j => j.ApplicationUser);
+            // ViewBag.UserID =  this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //return View(applicationDbContext.ToList());
         }
 
 		public IActionResult About()
