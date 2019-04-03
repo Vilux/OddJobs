@@ -114,7 +114,7 @@ namespace WebSecurityAssignment.Controllers
                 };
 
                 jobRepo.CreateJob(job);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "Profile", new { areas = "" });
             }
 
             ViewData["addressID"] = new SelectList(_context.Addresses, "addressID", "addressID", job.addressID);
@@ -160,7 +160,7 @@ namespace WebSecurityAssignment.Controllers
             if (ModelState.IsValid)
             {   
                jobRepo.UpdateJob(job);
-               return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "Profile", new { areas = "" });
 
             } else {
                 return NotFound();          
@@ -202,8 +202,8 @@ namespace WebSecurityAssignment.Controllers
         {
             JobRepo jobRepo = new JobRepo(_context);
             jobRepo.DeleteJob(id);
-           
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(nameof(Index), "Profile", new { areas = "" });
         }
 
         private bool JobExists(int id)
