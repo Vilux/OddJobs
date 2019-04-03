@@ -12,6 +12,7 @@
 
 $(document).ready(function () {
 
+    selectCurrent(1);
     var jobID = 0;
 
     $("tr").click(function () {
