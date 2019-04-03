@@ -54,14 +54,16 @@
                 <span asp-validation-for="Comment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Apply" class="btn btn-default" />
+                <a asp-controller="Home" asp-action="Index">
+                    <input type="submit" value="Apply" class="btn btn-default" />
+                </a>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Back to Job Feed</a>
 </div>
 
 @section Scripts {
