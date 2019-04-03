@@ -102,9 +102,9 @@ namespace WebSecurityAssignment.Data
                 _context.Users.AddRange(seedUsers);
                 _context.SaveChanges();
             }
-
-            DateTime dateExpired = new DateTime(2019, 03, 30, 10, 00, 00);
+        
             DateTime dateNeeded = DateTime.Now;
+            DateTime dateExpired = dateNeeded.AddDays(30);
 
             if (_context.Jobs.Count() == 0)
             {
