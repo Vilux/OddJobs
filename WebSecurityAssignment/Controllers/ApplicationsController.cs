@@ -184,9 +184,11 @@ namespace WebSecurityAssignment.Controllers
             {
                 ApplicationRepo applicationRepo = new ApplicationRepo(_context);
                 applicationRepo.UpdateApplication(application);
+               
             }
 
             ViewBag.Error = "An error occurred while updating this application. Please try again.";
+            
             return RedirectToAction(nameof(Index));
 
             //who the f left all this here?
