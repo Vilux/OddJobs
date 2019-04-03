@@ -50,6 +50,11 @@ namespace WebSecurityAssignment.Data
         public float paymentToEmployee { get; set; }
         public float paymentToProvider { get; set; }
         public DateTime date { get; set; }
+        public string amount { get; set; }
+        public string currency { get; set; }
+        public string intent { get; set; }
+        public string paymentMethod { get; set; }
+        public string paymentState { get; set; }
         public virtual Job Job { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
     }

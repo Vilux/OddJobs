@@ -47,13 +47,13 @@ namespace WebSecurityAssignment.Controllers
 
             List<double> paymentToEmployee = new List<double>();
             List<double> paymentToEmployer = new List<double>();
-            List<double> payment = new List<double>();
+            List<double> amount = new List<double>();
             paymentToEmployee.Add(job.amount * 0.15);
             paymentToEmployer.Add(job.amount * 0.85);
-            payment.Add(job.amount);
+            amount.Add(job.amount);
             ViewData["paymentToEmployee"] = new SelectList(paymentToEmployee);
             ViewData["paymentToEmployer"] = new SelectList(paymentToEmployer);
-            ViewData["payment"] = new SelectList(payment);
+            ViewData["amount"] = new SelectList(amount);
 
             List<DateTime> date = new List<DateTime>();
             date.Add(DateTime.Now);
