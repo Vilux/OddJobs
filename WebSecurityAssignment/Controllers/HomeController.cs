@@ -32,13 +32,7 @@ namespace WebSecurityAssignment.Controllers
                 ViewBag.message = TempData["applicationMessage"];
             }
 
-            if (TempData["appliedMessage"] != null)
-
-            {
-                ViewBag.message = TempData["appliedMessage"];
-            }
-
-            return View(jobs);
+            return View(jobs.OrderBy(j => j.dateNeeded));
         }
 
 		public IActionResult About()
