@@ -15,36 +15,41 @@
 $(document).ready(function () {
 
     var array = document.getElementsByTagName("tr");
-    var id = array[1].id
-    selectCurrent(id)
+    var id = array[1].id;
+    selectCurrent(id);
+
+    setDetails(id);
 
     var jobID = 0;
 
     $("tr").click(function () {
-        
-        jobID = this.id;
 
+        jobID = this.id;
+        setDetails(jobID);
+    });
+
+    function setDetails(jobID) {
         selectCurrent(jobID)
 
-        title = document.getElementById(this.id).getElementsByClassName("job_title")[0].innerHTML;
+        title = document.getElementById(jobID).getElementsByClassName("job_title")[0].innerHTML;
         title = title.trim();
 
-        description = document.getElementById(this.id).getElementsByClassName("job_description")[0].innerHTML;
+        description = document.getElementById(jobID).getElementsByClassName("job_description")[0].innerHTML;
         description = description.trim();
 
-        dateNeeded = document.getElementById(this.id).getElementsByClassName("job_dateNeeded")[0].innerHTML;
+        dateNeeded = document.getElementById(jobID).getElementsByClassName("job_dateNeeded")[0].innerHTML;
         dateNeeded = dateNeeded.trim();
 
-        dateExpired = document.getElementById(this.id).getElementsByClassName("job_dateExpired")[0].innerHTML;
+        dateExpired = document.getElementById(jobID).getElementsByClassName("job_dateExpired")[0].innerHTML;
         dateExpired = dateExpired.trim();
 
-        address = document.getElementById(this.id).getElementsByClassName("job_address")[0].innerHTML;
+        address = document.getElementById(jobID).getElementsByClassName("job_address")[0].innerHTML;
         address = address.trim();
 
-        employer = document.getElementById(this.id).getElementsByClassName("job_employer")[0].innerHTML;
+        employer = document.getElementById(jobID).getElementsByClassName("job_employer")[0].innerHTML;
         employer = employer.trim();
 
-        amount = document.getElementById(this.id).getElementsByClassName("job_amount")[0].innerHTML;
+        amount = document.getElementById(jobID).getElementsByClassName("job_amount")[0].innerHTML;
         amount = amount.trim();
 
 
@@ -84,7 +89,7 @@ $(document).ready(function () {
         var address_node = document.createTextNode(address);
         details_address.appendChild(address_node);
 
-  
+
 
         $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + address + '&key=AIzaSyD8owFdPbt2-OK8FLSbhSfZe7qry90ptOA',
             function (data) {
@@ -106,7 +111,7 @@ $(document).ready(function () {
                     title: 'Job Location'
                 });
             });
-    });
+    }
     $(".apply_button").click(function () {
         window.location.href = '/Applications/Create/' + jobID;
     });

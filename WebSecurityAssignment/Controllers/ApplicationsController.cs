@@ -175,16 +175,14 @@ namespace WebSecurityAssignment.Controllers
                 if (currentUserId == job.employerID) {
                     jobRepo.AcceptApplcation(jobId, acceptedApplicantId);
                 }
-                return RedirectToAction("Details/" + job.jobID, "Jobs", null);
+                //return RedirectToAction("Details/" + job.jobID, "Jobs", null);
+                return RedirectToAction("Index", "Profile");
             }
             else
             {
                 ViewBag.Error = "An error occurred while updating this application. Please try again.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));   
             }
-            
-
-            
         }
 
         // POST: Applications/Edit/5
