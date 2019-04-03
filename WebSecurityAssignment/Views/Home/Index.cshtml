@@ -6,13 +6,17 @@
 
 
 }
+
+@if (ViewBag.message != null) {
+    <script>alert(`@ViewBag.message`)</script>
+}
 <div>
     <section class="job_feed">
         <div id="feed_list">
             <h2>Job Listings</h2>
             <p>
                 <a asp-controller="Jobs" asp-action="Create">Create New</a>
-                   
+
             </p>
             <table class="table">
                 <thead>
@@ -42,40 +46,40 @@
                     @foreach (var item in Model)
                     {
                         @if (item.employeeID == null)
-                        { 
-                        <tr id="@Html.DisplayFor(modelItem => item.ID)">
-                            <td class="job_title">
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </td>
-                            <td class="job_employer">
-                                @Html.DisplayFor(modelItem => item.EmployerName)
-                            </td>
-                            <td class="job_amount">
-                                $@Html.DisplayFor(modelItem => item.Amount)
-                            </td>
-                            <td class="job_dateNeeded">
-                                @Html.DisplayFor(modelItem => item.dateNeeded.DayOfWeek)
+                        {
+                            <tr id="@Html.DisplayFor(modelItem => item.ID)">
+                                <td class="job_title">
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td class="job_employer">
+                                    @Html.DisplayFor(modelItem => item.EmployerName)
+                                </td>
+                                <td class="job_amount">
+                                    $@Html.DisplayFor(modelItem => item.Amount)
+                                </td>
+                                <td class="job_dateNeeded">
+                                    @Html.DisplayFor(modelItem => item.dateNeeded.DayOfWeek)
 
-                                @{
-                                    string monthDayNeeded = item.dateNeeded.Date.ToString("MMMM dd");
-                                } 
-                                @Html.DisplayFor(modelItem => monthDayNeeded)
-                            </td>
-                            <td class="job_dateExpired">
-                                @Html.DisplayFor(modelItem => item.dateExpired.DayOfWeek)
+                                    @{
+                                        string monthDayNeeded = item.dateNeeded.Date.ToString("MMMM dd");
+                                    }
+                                    @Html.DisplayFor(modelItem => monthDayNeeded)
+                                </td>
+                                <td class="job_dateExpired">
+                                    @Html.DisplayFor(modelItem => item.dateExpired.DayOfWeek)
 
-                                @{
-                                    string monthDayExpired = item.dateExpired.Date.ToString("MMMM dd");
-                                }
-                                @Html.DisplayFor(modelItem => monthDayExpired)
-                            </td>
-                            <td class="job_address">
-                                @Html.DisplayFor(modelItem => item.Address)
-                            </td>
-                            <td class="job_description" style="display:none;">
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                        </tr>
+                                    @{
+                                        string monthDayExpired = item.dateExpired.Date.ToString("MMMM dd");
+                                    }
+                                    @Html.DisplayFor(modelItem => monthDayExpired)
+                                </td>
+                                <td class="job_address">
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                                <td class="job_description" style="display:none;">
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                            </tr>
                         }
                     }
 
