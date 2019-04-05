@@ -42,25 +42,7 @@ namespace WebSecurityAssignment.Controllers
             return View(applications);
         }
 
-        // GET: Applications/Details/5
-        //public async Task<IActionResult> Details(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var application = await _context.Applications
-        //        .Include(a => a.ApplicationUser)
-        //        .Include(a => a.Job)
-        //        .FirstOrDefaultAsync(m => m.ApplicantID == id);
-        //    if (application == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(application);
-        //}
+    
 
         public async Task<IActionResult> Detail(string applicantID, int jobID)
         {
@@ -94,7 +76,6 @@ namespace WebSecurityAssignment.Controllers
                 var employer = _context.Users.Find(job.employerID);
                 var address = _context.Addresses.Find(job.addressID);
 
-
                 List<string> applicantID = new List<string>();
                 applicantID.Add(currentUser);
 
@@ -106,14 +87,16 @@ namespace WebSecurityAssignment.Controllers
                 ViewData["Title"] = job.title;
                 ViewData["Employer"] = employer.FirstName + " " + employer.LastName;
                 ViewData["JobDetail"] = job.description;
-                ViewData["Address"] = (address.streetAddress + " " + address.city + " " + address.province + " " + address.postalCode);
-
-
+                ViewData["Address"] = (address.streetAddress + ", " + address.city + ", " + address.province + " " + address.postalCode);
+                ViewData["DateNeeded"] = job.dateNeeded.Date.ToString("MMMM dd"); 
+                ViewData["DateExpired"] = job.dateExpired.Date.ToString("MMMM dd"); 
+                ViewData["Amount"] = "$" + job.amount;
+                
                 return View();
             }
             else
             {
-                TempData["alreadyAppliedMessage"] = "You have already applied for this job.";
+                TempData["applicationMessage"] = "You have already applied for this job.";
                 return RedirectToAction(nameof(Index), "", new { areas = "" });
             }
         }
@@ -132,7 +115,11 @@ namespace WebSecurityAssignment.Controllers
                 //_context.Add(application);
                 //await _context.SaveChangesAsync();
                 applicationRepo.CreateApplication(application.ApplicantID,application.JobID,application.Comment);
-                return RedirectToAction(nameof(Index));
+
+                var job = _context.Jobs.Where(j => j.jobID == application.JobID).FirstOrDefault();
+
+                TempData["applicationMessage"] = "You have succesfully applied for this job:\\n" + job.title;
+                return RedirectToAction(nameof(Index), "", new { areas = "" });
             }
             ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
             ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID", application.JobID);
@@ -171,16 +158,14 @@ namespace WebSecurityAssignment.Controllers
                 if (currentUserId == job.employerID) {
                     jobRepo.AcceptApplcation(jobId, acceptedApplicantId);
                 }
-                return RedirectToAction("Details/" + job.jobID, "Jobs", null);
+                
+                return RedirectToAction("Index", "Profile");
             }
             else
             {
                 ViewBag.Error = "An error occurred while updating this application. Please try again.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));   
             }
-            
-
-            
         }
 
         // POST: Applications/Edit/5
@@ -201,35 +186,6 @@ namespace WebSecurityAssignment.Controllers
             
             return RedirectToAction(nameof(Index));
 
-            //who the f left all this here?
-            //if (id != application.ApplicantID)
-            //{
-            //    return NotFound();
-            //}
-
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        _context.Update(application);
-            //        await _context.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!ApplicationExists(application.ApplicantID, application.JobID))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
-            //ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID", application.JobID);
-            //return View(application);
         }
 
         // GET: Applications/Delete
@@ -264,7 +220,7 @@ namespace WebSecurityAssignment.Controllers
             }
 
             ViewBag.Error = "An error occurred while deleting this application. Please try again.";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Applications","Profile");
         }
 
      

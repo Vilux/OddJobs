@@ -29,12 +29,12 @@ namespace WebSecurityAssignment.Controllers
             JobRepo jobRepo = new JobRepo(db);
             var jobs = jobRepo.GetAllJobs();        
 
-            if (TempData["alreadyAppliedMessage"] != null)
+            if (TempData["applicationMessage"] != null)
             {
-                ViewBag.message = TempData["alreadyAppliedMessage"];
+                ViewBag.message = TempData["applicationMessage"];
             }
 
-            return View(jobs);
+            return View(jobs.OrderBy(j => j.dateNeeded));
         }
 
 		public IActionResult About()
