@@ -5,12 +5,14 @@
     ViewData["Title"] = "Log in";
 }
 
-<h2>@ViewData["Title"]</h2>
+
 <div class="row">
+    <br />
     <div class="col-md-4">
         <section>
             <form method="post">
-                <h4>Use a local account to log in.</h4>
+                <br />
+                <h2>Login</h2>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
@@ -34,21 +36,51 @@
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-default">Log in</button>
-                </div>               
+                </div>
                 <div class="form-group">
 
+                    <p>
+                        <a class="btn btn-primary" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
 
-                    <p>
-                        <a asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
+                  
+
+
+
                 </div>
             </form>
         </section>
+
     </div>
-</div>
+
+        <div class="col-md-6 col-md-offset-2">
+            <section>
+                <p>
+                    <br />
+                    <h2>Welcome to Odd Job &nbsp <img src="http://clipart-library.com/images/piq8qyGyT.jpg" width="64" height="40" /></a></h2>
+                    <hr />
+
+                    <br />
+                    <h2>Post & Find Odd Jobs In Your Community</h2>
+                    <br />
+                    <ul>
+                        <li><h4>Post jobs that you need done </h4></li>
+                        <li><h4>Find odd jobs to make extra cash </h4></li>
+                        <li><h4>Have your payments handled by a third party</h4></li>
+                    </ul>
+                </p>
+                <br />
+                <p>
+                    <h2>Don't have an account?</h2>
+                    <a class="btn btn-primary" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                </p>
+                
+            </section>
+        </div>
+
+
+
+    </div>
 
 
 @section Scripts {
