@@ -42,25 +42,7 @@ namespace WebSecurityAssignment.Controllers
             return View(applications);
         }
 
-        // GET: Applications/Details/5
-        //public async Task<IActionResult> Details(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var application = await _context.Applications
-        //        .Include(a => a.ApplicationUser)
-        //        .Include(a => a.Job)
-        //        .FirstOrDefaultAsync(m => m.ApplicantID == id);
-        //    if (application == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(application);
-        //}
+    
 
         public async Task<IActionResult> Detail(string applicantID, int jobID)
         {
@@ -204,35 +186,6 @@ namespace WebSecurityAssignment.Controllers
             
             return RedirectToAction(nameof(Index));
 
-            //who the f left all this here?
-            //if (id != application.ApplicantID)
-            //{
-            //    return NotFound();
-            //}
-
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        _context.Update(application);
-            //        await _context.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!ApplicationExists(application.ApplicantID, application.JobID))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["ApplicantID"] = new SelectList(_context.Users, "Id", "Id", application.ApplicantID);
-            //ViewData["JobID"] = new SelectList(_context.Jobs, "jobID", "jobID", application.JobID);
-            //return View(application);
         }
 
         // GET: Applications/Delete
@@ -267,7 +220,7 @@ namespace WebSecurityAssignment.Controllers
             }
 
             ViewBag.Error = "An error occurred while deleting this application. Please try again.";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Applications","Profile");
         }
 
      
