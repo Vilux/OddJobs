@@ -64,7 +64,7 @@ namespace WebSecurityAssignment.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Description,Amount,dateNeeded,dateExpired,Address,City,Province")] JobCreateVM jobCreateVM)
+        public async Task<IActionResult> Create([Bind("Title,Description,Amount,dateNeeded,hoursNeeded,minutesNeeded,dateExpired,hoursExpired,minutesExpired,Address,City,Province")] JobCreateVM jobCreateVM)
         {
             JobRepo jobRepo = new JobRepo(_context);
 
@@ -98,7 +98,17 @@ namespace WebSecurityAssignment.Controllers
                     addressesRepo.CreateAddress(address);
                     addressId = address.addressID;
                 }
+                
 
+                DateTime dateNeeded = jobCreateVM.dateNeeded;
+
+                dateNeeded = dateNeeded.AddHours(double.Parse(jobCreateVM.hoursNeeded));
+                dateNeeded = dateNeeded.AddMinutes(double.Parse(jobCreateVM.minutesNeeded));
+
+                DateTime dateExpired = jobCreateVM.dateExpired;
+
+                dateExpired = dateExpired.AddHours(double.Parse(jobCreateVM.hoursExpired));
+                dateExpired = dateExpired.AddMinutes(double.Parse(jobCreateVM.minutesExpired));
 
                 job = new Job()
                 {
@@ -107,8 +117,8 @@ namespace WebSecurityAssignment.Controllers
                     employerID = this.User.FindFirstValue(ClaimTypes.NameIdentifier),
                     employeeID = null,
                     amount = jobCreateVM.Amount,
-                    dateNeeded = jobCreateVM.dateNeeded,
-                    dateExpired = jobCreateVM.dateExpired,
+                    dateNeeded = dateNeeded,
+                    dateExpired = dateExpired,
                     addressID = addressId
 
                 };

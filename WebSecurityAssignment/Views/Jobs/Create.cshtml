@@ -3,6 +3,116 @@
 @{
     ViewData["Title"] = "Create";
 }
+<script>
+
+    //Needed Date
+
+    $(document).on('click', '#hoursNPlus', function plus(e) {
+        input = document.getElementById('hoursNeeded');
+
+        if (parseInt(input.value) == 12) {
+            input.value = "01"
+        } else if (parseInt(input.value) < 9) {
+            input.value = "0" + (parseInt(input.value) + 1);
+        } else {
+            input.value = parseInt(input.value) + 1;
+        }
+
+    });
+
+    $(document).on('click', '#hoursNMinus', function plus(e) {
+        input = document.getElementById('hoursNeeded');
+
+        if (parseInt(input.value) == 01) {
+            input.value = "12"
+        } else if (parseInt(input.value) < 11) {
+            input.value = "0" + (parseInt(input.value) - 1);
+        } else {
+            input.value = parseInt(input.value) - 1;
+        }
+
+    });
+
+    $(document).on('click', '#minutesNPlus', function plus(e) {
+        input = document.getElementById('minutesNeeded');
+
+        if (parseInt(input.value) == 59) {
+            input.value = "01"
+        } else if (parseInt(input.value) < 9) {
+            input.value = "0" + (parseInt(input.value) + 1);
+        } else {
+            input.value = parseInt(input.value) + 1;
+        }
+
+    });
+
+    $(document).on('click', '#minutesNMinus', function plus(e) {
+        input = document.getElementById('minutesNeeded');
+
+        if (parseInt(input.value) == 01) {
+            input.value = "59"
+        } else if (parseInt(input.value) < 11) {
+            input.value = "0" + (parseInt(input.value) - 1);
+        } else {
+            input.value = parseInt(input.value) - 1;
+        }
+
+    });
+
+    //Expired Date
+
+    $(document).on('click', '#hoursEPlus', function plus(e) {
+        input = document.getElementById('hoursExpired');
+
+        if (parseInt(input.value) == 12) {
+            input.value = "01"
+        } else if (parseInt(input.value) < 9) {
+            input.value = "0" + (parseInt(input.value) + 1);
+        } else {
+            input.value = parseInt(input.value) + 1;
+        }
+        
+    });
+
+    $(document).on('click', '#hoursEMinus', function plus(e) {
+        input = document.getElementById('hoursExpired');
+
+        if (parseInt(input.value) == 01) {
+            input.value = "12"
+        } else if (parseInt(input.value) < 11) {
+            input.value = "0" + (parseInt(input.value) - 1);
+        } else {
+            input.value = parseInt(input.value) - 1;
+        }
+
+    });
+
+    $(document).on('click', '#minutesEPlus', function plus(e) {
+        input = document.getElementById('minutesExpired');
+
+        if (parseInt(input.value) == 59) {
+            input.value = "01"
+        } else if (parseInt(input.value) < 9) {
+            input.value = "0" + (parseInt(input.value) + 1);
+        } else {
+            input.value = parseInt(input.value) + 1;
+        }
+
+    });
+
+    $(document).on('click', '#minutesEMinus', function plus(e) {
+        input = document.getElementById('minutesExpired');
+
+        if (parseInt(input.value) == 01) {
+            input.value = "59"
+        } else if (parseInt(input.value) < 11) {
+            input.value = "0" + (parseInt(input.value) - 1);
+        } else {
+            input.value = parseInt(input.value) - 1;
+        }
+
+    });
+</script>
 
 <h2>Create</h2>
 
@@ -29,13 +139,41 @@
             </div>
             <div class="form-group">
                 <label asp-for="dateNeeded" class="control-label"></label>
-                <input asp-for="dateNeeded" class="form-control" />
+                <input asp-for="dateNeeded" class="forum-control" type="date" />
                 <span asp-validation-for="dateNeeded" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <input asp-for="hoursNeeded" class="form-control" id="hoursNeeded"   value="01" />
+                <span asp-validation-for="hoursNeeded" class="text-danger"></span>
+                <span>
+                    <button id="hoursNMinus" type="button">-</button>
+                    <button id="hoursNPlus" type="button">+</button>
+                </span>
+                <input asp-for="minutesNeeded" class="form-control" id="minutesNeeded"  value="00"/>
+                <span asp-validation-for="minutesNeeded" class="text-danger"></span>
+                <span>
+                    <button id="minutesNMinus" type="button">-</button>
+                    <button id="minutesNPlus" type="button">+</button>
+                </span>
+            </div>
+            <div class="form-group">
                 <label asp-for="dateExpired" class="control-label"></label>
-                <input asp-for="dateExpired" class="form-control" />
+                <input asp-for="dateExpired" class="form-control" type="date" />
                 <span asp-validation-for="dateExpired" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="hoursExpired" class="form-control" id="hoursExpired"   value="01" />
+                <span asp-validation-for="hoursExpired" class="text-danger"></span>
+                <span>
+                    <button id="hoursEMinus" type="button">-</button>
+                    <button id="hoursEPlus" type="button">+</button>
+                </span>
+                <input asp-for="minutesExpired" class="form-control" id="minutesExpired"   value="00"/>
+                <span asp-validation-for="minutesExpired" class="text-danger"></span>
+                <span>
+                    <button id="minutesEMinus" type="button">-</button>
+                    <button id="minutesEPlus" type="button">+</button>
+                </span>
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
