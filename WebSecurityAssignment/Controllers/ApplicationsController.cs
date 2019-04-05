@@ -94,7 +94,6 @@ namespace WebSecurityAssignment.Controllers
                 var employer = _context.Users.Find(job.employerID);
                 var address = _context.Addresses.Find(job.addressID);
 
-
                 List<string> applicantID = new List<string>();
                 applicantID.Add(currentUser);
 
@@ -106,8 +105,7 @@ namespace WebSecurityAssignment.Controllers
                 ViewData["Title"] = job.title;
                 ViewData["Employer"] = employer.FirstName + " " + employer.LastName;
                 ViewData["JobDetail"] = job.description;
-                ViewData["Address"] = (address.streetAddress + " " + address.city + " " + address.province + " " + address.postalCode);
-
+                ViewData["Address"] = (address.streetAddress + ", " + address.city + ", " + address.province + " " + address.postalCode);
 
                 return View();
             }
