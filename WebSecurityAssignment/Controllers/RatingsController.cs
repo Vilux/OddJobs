@@ -11,7 +11,7 @@ using WebSecurityAssignment.Repositories;
 
 namespace WebSecurityAssignment.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   
     public class RatingsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -113,10 +113,25 @@ namespace WebSecurityAssignment.Controllers
         }
 
         // GET: Ratings/Create
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
-            ViewData["employeeID"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["jobID"] = new SelectList(_context.Jobs, "jobID", "jobID");
+            JobRepo jobRepo = new JobRepo(_context);
+            var job = jobRepo.GetJob(id);
+
+            UserRepo userRepo = new UserRepo(_context);
+            var employee = _context.Users.Where(e => e.Id == job.employeeID).FirstOrDefault();
+
+            List<string> applicantID = new List<string>();
+            applicantID.Add(job.employeeID);
+
+            List<string> jobID = new List<string>();
+            jobID.Add(id.ToString());
+
+            ViewData["ApplicantID"] = new SelectList(applicantID);
+            ViewData["jobID"] = new SelectList(jobID);
+            ViewData["EmployeeName"] = employee.FirstName + " " + employee.LastName;
+            ViewData["Title"] = job.title;
+
             return View();
         }
 
@@ -134,11 +149,11 @@ namespace WebSecurityAssignment.Controllers
                 var success = ratingsRepo.CreateRating(rating.jobID, rating.employeeID, rating.review, rating.score);
                 if (success)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index","Profile");
                 }
             }
             ViewBag.Error = "An error occurred while creating this rating. Please try again.";
-            return View();
+            return RedirectToAction("Index", "Profile");
         }
 
         private bool RatingsExists(string id)
