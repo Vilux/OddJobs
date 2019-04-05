@@ -13,7 +13,6 @@ using WebSecurityAssignment.Repositories;
 
 namespace WebSecurityAssignment.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
 	{
         private ApplicationDbContext db;
@@ -24,6 +23,7 @@ namespace WebSecurityAssignment.Controllers
             Seeder seeder = new Seeder(db);
         }
 
+        [Authorize]
         public IActionResult Index()
 		{
             JobRepo jobRepo = new JobRepo(db);
@@ -36,25 +36,6 @@ namespace WebSecurityAssignment.Controllers
 
             return View(jobs.OrderBy(j => j.dateNeeded));
         }
-
-		public IActionResult About()
-		{
-			ViewData["Message"] = "Your application description page.";
-
-			return View();
-		}
-
-		public IActionResult Contact()
-		{
-			ViewData["Message"] = "Your contact page.";
-
-			return View();
-		}
-
-		public IActionResult Privacy()
-		{
-			return View();
-		}
 
         public IActionResult API()
         {
