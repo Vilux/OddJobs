@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebSecurityAssignment.Data;
@@ -12,7 +13,8 @@ using WebSecurityAssignment.Repositories;
 
 namespace WebSecurityAssignment.Controllers
 {
-	public class HomeController : Controller
+    [Authorize]
+    public class HomeController : Controller
 	{
         private ApplicationDbContext db;
 
