@@ -1,0 +1,27 @@
+﻿.time-group {
+    display: flex;
+}
+
+.button-span{
+    padding: 0;
+    margin: 0;
+}
+
+    .time-group button {
+        width: 15px;
+        height: 20px;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        display: block;
+        line-height: 4px;
+    }
+
+.time-control {
+    width: 45px;
+}
+
+.twodots {
+    font-size: 25px;
+    line-height: 35px;
+}

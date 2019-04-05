@@ -10,7 +10,7 @@
     $(document).on('click', '#hoursNPlus', function plus(e) {
         input = document.getElementById('hoursNeeded');
 
-        if (parseInt(input.value) == 12) {
+        if (parseInt(input.value) == 24) {
             input.value = "01"
         } else if (parseInt(input.value) < 9) {
             input.value = "0" + (parseInt(input.value) + 1);
@@ -24,7 +24,7 @@
         input = document.getElementById('hoursNeeded');
 
         if (parseInt(input.value) == 01) {
-            input.value = "12"
+            input.value = "24"
         } else if (parseInt(input.value) < 11) {
             input.value = "0" + (parseInt(input.value) - 1);
         } else {
@@ -64,7 +64,7 @@
     $(document).on('click', '#hoursEPlus', function plus(e) {
         input = document.getElementById('hoursExpired');
 
-        if (parseInt(input.value) == 12) {
+        if (parseInt(input.value) == 24) {
             input.value = "01"
         } else if (parseInt(input.value) < 9) {
             input.value = "0" + (parseInt(input.value) + 1);
@@ -78,7 +78,7 @@
         input = document.getElementById('hoursExpired');
 
         if (parseInt(input.value) == 01) {
-            input.value = "12"
+            input.value = "24"
         } else if (parseInt(input.value) < 11) {
             input.value = "0" + (parseInt(input.value) - 1);
         } else {
@@ -142,44 +142,41 @@
                 <input asp-for="dateNeeded" class="form-control" type="date" />
                 <span asp-validation-for="dateNeeded" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label class="control-label">Hours</label>
-                <input asp-for="hoursNeeded" class="form-control" id="hoursNeeded" value="01" />
+            <label class="control-label">Time (24-Hour)</label>
+            <div class="form-group time-group">
+                <input asp-for="hoursNeeded" class="form-control time-control" id="hoursNeeded" value="12" />
                 <span asp-validation-for="hoursNeeded" class="text-danger"></span>
-                <span>
-
-                    <button id="hoursNMinus" type="button">-</button>
+                <span class="button-span">
                     <button id="hoursNPlus" type="button">+</button>
-                </span>
+                    <button id="hoursNMinus" type="button">-</button>
+                </span><span class="twodots">:</span>
                 <br />
-                <label class="control-label">Minutes</label>
-                <input asp-for="minutesNeeded" class="form-control" id="minutesNeeded" value="00" />
+                <input asp-for="minutesNeeded" class="form-control time-control" id="minutesNeeded" value="00" />
                 <span asp-validation-for="minutesNeeded" class="text-danger"></span>
-                <span>
-                    <button id="minutesNMinus" type="button">-</button>
+                <span class="button-span">
                     <button id="minutesNPlus" type="button">+</button>
+                    <button id="minutesNMinus" type="button">-</button>
                 </span>
             </div>
-            <div class="form-group">                
-                <label asp-for="dateExpired" class="control-label"></label>
+            <div class="form-group">
+                <label class="control-label">Available Until</label>
                 <input asp-for="dateExpired" class="form-control" type="date" />
                 <span asp-validation-for="dateExpired" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label class="control-label">Hours</label>
-                <input asp-for="hoursExpired" class="form-control" id="hoursExpired" value="01" />
+            <label class="control-label">Time (24-Hour)</label><br />
+            <div class="form-group time-group">
+                <input asp-for="hoursExpired" class="form-control time-control" id="hoursExpired" value="12" />
                 <span asp-validation-for="hoursExpired" class="text-danger"></span>
-                <span>
-                    <button id="hoursEMinus" type="button">-</button>
+                <span class="button-span">
                     <button id="hoursEPlus" type="button">+</button>
-                </span>
+                    <button id="hoursEMinus" type="button">-</button>
+                </span><span class="twodots">:</span>
                 <br />
-                <label class="control-label">Minutes</label>
-                <input asp-for="minutesExpired" class="form-control" id="minutesExpired" value="00" />
+                <input asp-for="minutesExpired" class="form-control time-control" id="minutesExpired" value="00" />
                 <span asp-validation-for="minutesExpired" class="text-danger"></span>
-                <span>
-                    <button id="minutesEMinus" type="button">-</button>
+                <span class="button-span">
                     <button id="minutesEPlus" type="button">+</button>
+                    <button id="minutesEMinus" type="button">-</button>
                 </span>
             </div>
             <div class="form-group">
