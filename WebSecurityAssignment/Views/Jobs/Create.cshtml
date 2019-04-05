@@ -27,12 +27,12 @@
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="dateNeeded" class="control-label"></label>
+                <label asp-for="dateNeeded" class="control-label">Job Available</label>
                 <input asp-for="dateNeeded" class="form-control" />
                 <span asp-validation-for="dateNeeded" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="dateExpired" class="control-label"></label>
+                <label asp-for="dateExpired" class="control-label">Job Expires (default: 30 days from post date)</label>
                 <input asp-for="dateExpired" class="form-control" />
                 <span asp-validation-for="dateExpired" class="text-danger"></span>
             </div>
