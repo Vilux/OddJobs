@@ -37,7 +37,7 @@ namespace WebSecurityAssignment.Services
                 EnableSsl = enableSSL
             };
 
-            const string FROM = "ajadversalo@outlook.com";
+            const string FROM = "Odd Job";
 
             return client.SendMailAsync(
                 new MailMessage(FROM, toEmail, subject, htmlMessage) { IsBodyHtml = true }
