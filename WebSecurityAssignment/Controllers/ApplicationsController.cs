@@ -106,7 +106,10 @@ namespace WebSecurityAssignment.Controllers
                 ViewData["Employer"] = employer.FirstName + " " + employer.LastName;
                 ViewData["JobDetail"] = job.description;
                 ViewData["Address"] = (address.streetAddress + ", " + address.city + ", " + address.province + " " + address.postalCode);
-
+                ViewData["DateNeeded"] = job.dateNeeded.Date.ToString("MMMM dd"); 
+                ViewData["DateExpired"] = job.dateExpired.Date.ToString("MMMM dd"); 
+                ViewData["Amount"] = "$" + job.amount;
+                
                 return View();
             }
             else
@@ -173,7 +176,7 @@ namespace WebSecurityAssignment.Controllers
                 if (currentUserId == job.employerID) {
                     jobRepo.AcceptApplcation(jobId, acceptedApplicantId);
                 }
-                //return RedirectToAction("Details/" + job.jobID, "Jobs", null);
+                
                 return RedirectToAction("Index", "Profile");
             }
             else

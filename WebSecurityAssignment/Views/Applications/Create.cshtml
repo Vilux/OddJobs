@@ -12,20 +12,40 @@
             Employer:
         </dt>
         <dd>
-            @Html.Raw(ViewBag.Employer)
+
+            @ViewData["Employer"]
         </dd>
 
         <dt>
             Details:
         </dt>
         <dd>
-            @Html.Raw(ViewBag.JobDetail)
+
+            @ViewData["JobDetail"]
         </dd>
         <dt>
             Address:
         </dt>
         <dd>
-            @Html.Raw(ViewBag.Address)
+            @ViewData["Address"]
+        </dd>
+        <dt>
+            Job Available:
+        </dt>
+        <dd>
+            @ViewData["DateNeeded"]
+        </dd>
+        <dt>
+            Job Expires:
+        </dt>
+        <dd>
+            @ViewData["DateExpired"]
+        </dd>
+        <dt>
+            Pay Amount:
+        </dt>
+        <dd>
+            @ViewData["Amount"]
         </dd>
         <dt>
             Comments:
