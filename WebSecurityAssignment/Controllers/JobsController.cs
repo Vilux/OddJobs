@@ -160,6 +160,8 @@ namespace WebSecurityAssignment.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("jobID,title,description,employerID,employeeID,amount,dateNeeded,dateExpired,addressID")] Job job)
         {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             JobRepo jobRepo = new JobRepo(_context);
 
             if (id != job.jobID)
@@ -167,17 +169,24 @@ namespace WebSecurityAssignment.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {   
-               jobRepo.UpdateJob(job);
-                return RedirectToAction(nameof(Index), "Profile", new { areas = "" });
+            if (job.employerID == currentUser)
+            {
+                if (ModelState.IsValid)
+                {
+                    jobRepo.UpdateJob(job);
+                    return RedirectToAction(nameof(Index), "Profile", new { areas = "" });
 
-            } else {
-                return NotFound();          
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return NotFound();
             }
 
-            //ViewData["addressID"] = new SelectList(_context.Addresses, "addressID", "addressID", job.addressID);
-            //ViewData["employerID"] = new SelectList(_context.Users, "Id", "Id", job.employerID);
         }
 
         // GET: Jobs/Delete/5
@@ -191,11 +200,6 @@ namespace WebSecurityAssignment.Controllers
             }
 
             var job = jobRepo.GetJob(id.Value);
-
-            //var job = await _context.Jobs
-            //    .Include(j => j.Address)
-            //    .Include(j => j.ApplicationUser)
-            //    .FirstOrDefaultAsync(m => m.jobID == id);
 
             if (job == null)
             {
