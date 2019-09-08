@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $.getJSON('https://oddjobapp.azurewebsites.net/api/jobfeedapi',
+    $.getJSON('http://oddjob.azurewebsites.net/api/jobfeedapi',
         function (data) {
             var items = data;
             console.log(items);
