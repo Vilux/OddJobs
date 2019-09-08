@@ -1,1 +1,1 @@
-app url: http://oddjobs.azurewebsites.net/
+app url: https://oddjobapp.azurewebsites.net
