@@ -12,10 +12,15 @@ namespace WebSecurityAssignment.Data
     public class Address
     {
         [Key]
+        [Display(Name = "Address ID")]
         public int addressID { get; set; }
+        [Display(Name = "Street Address")]
         public string streetAddress { get; set; }
+        [Display(Name = "City")]
         public string city { get; set; }
+        [Display(Name = "Province")]
         public string province { get; set; }
+        [Display(Name = "Postal Code")]
         public string postalCode { get; set; }
         public virtual ICollection<Job> Jobs
         { get; set; }
@@ -25,13 +30,21 @@ namespace WebSecurityAssignment.Data
     {
         [Key]
         public int jobID { get; set; }
+        [Display(Name = "Title")]
         public string title { get; set; }
+        [Display(Name = "Description")]
         public string description { get; set; }
+        [Display(Name = "Employer ID")]
         public string employerID { get; set; }
+        [Display(Name = "Employee ID")]
         public string employeeID { get; set; }
+        [Display(Name = "Amount")]
         public float amount { get; set; }
+        [Display(Name = "Date Needed")]
         public DateTime dateNeeded { get; set; }
+        [Display(Name = "Date Expired")]
         public DateTime dateExpired { get; set; }
+        [Display(Name = "Address ID")]
         public int addressID { get; set; }
         public virtual Address Address { get; set; }
         public virtual Transaction Transaction { get; set; }

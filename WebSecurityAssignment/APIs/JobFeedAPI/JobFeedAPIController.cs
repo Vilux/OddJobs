@@ -28,16 +28,6 @@ namespace WebSecurityAssignment.APIs.JobFeedAPI
             return jobRepo.GetAllJobs();
         }
 
-        /*
-        [HttpGet("{id}", Name = "GetJobs")]
-        public IActionResult GetById(int id) {
-            var item = Dbcontext.Jobs.FirstOrDefault(t => t.jobID == id);
-            if (item == null) {
-                return NotFound();
-            }
-            return new ObjectResult(item);
-        }
-        */
 
        
         // DELETE api/<controller>/5
