@@ -11,6 +11,7 @@ $(document).ready(function () {
                 let br2 = document.createElement('br');
                 let br3 = document.createElement('br');
                 let br4 = document.createElement('br');
+                let br5 = document.createElement('br');
 
                 let title = document.createTextNode("Job: " + items[i].title);
                 let description = document.createTextNode("Description: " + items[i].description);
@@ -27,6 +28,7 @@ $(document).ready(function () {
                 li.appendChild(dateNeeded);
                 li.appendChild(br4);
                 li.appendChild(dateExpired);
+                li.appendChild(br5);
 
                 ul.appendChild(li);
             }
