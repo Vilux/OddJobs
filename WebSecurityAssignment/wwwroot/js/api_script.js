@@ -12,7 +12,7 @@ $(document).ready(function () {
                 let br3 = document.createElement('br');
                 let br4 = document.createElement('br');
 
-                let title = document.createTextNode("Title: " + items[i].title);
+                let title = document.createTextNode("Job: " + items[i].title);
                 let description = document.createTextNode("Description: " + items[i].description);
                 let address = document.createTextNode("Address: " + items[i].address);
                 let dateNeeded = document.createTextNode("Date Needed: " + items[i].dateNeeded);
